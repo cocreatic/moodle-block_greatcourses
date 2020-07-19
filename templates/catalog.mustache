@@ -15,7 +15,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template block_greatcourses/main
+    @template block_greatcourses/catalog
 
     This template renders the template content area for a resource.
 
@@ -23,11 +23,29 @@
     {}
 }}
 
+<div class="coursessearch-box">
+    <form method="post">
+        <input type="text" name="q" value="{{query}}" />
+        <button>{{#pix}}i/search, core{{/pix}}</button>
+        <input type="hidden" value="{{sort}}" />
+    </form>
+</div>
+<div class="courses-sort sort-by-{{sort}}">
+    <ul>
+        <li><a href="?q={{query}}" data-sort="default">{{#str}}defaultsort, block_greatcourses{{/str}}</a></li>
+        <li><a href="?sort=recents&q={{query}}" data-sort="recents">{{#str}}recents, block_greatcourses{{/str}}</a></li>
+{{#rateavailable}}
+        <li><a href="?sort=greats&q={{query}}" data-sort="greats">{{#str}}greats, block_greatcourses{{/str}}</a></li>
+{{/rateavailable}}
+    </ul>
+</div>
 <div class="courses">
     {{#courses}}
     <div class="panel panel-default coursebox">
         <div class="courseimage" style="background-image: url({{imagepath}});"></div>
-        <div class="panel-heading"></div>
+        <div class="panel-heading">
+            {{#rating}}{{#pix}}i/star{{/pix}}{{/rating}}
+        </div>
         <div class="panel-body clearfix">
             <a class="" title="{{{shortname}}}" href="{{{baseurl}}}/blocks/greatcourses/detail.php?id={{{id}}}">
                 {{{fullname}}}

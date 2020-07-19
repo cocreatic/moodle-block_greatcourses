@@ -132,7 +132,9 @@ class detail implements renderable, templatable {
                         }
                     }
 
-                    $custom->$field = $c;
+                    if (!empty($c->value)) {
+                        $custom->$field = $c;
+                    }
 
                     break;
                 }

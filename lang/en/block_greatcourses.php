@@ -16,7 +16,7 @@
 
 
 /**
- * Strings for component 'block_greatcourses', language 'en', branch 'MOODLE_31_STABLE'
+ * Strings for component 'block_greatcourses', language 'en'
  *
  * @package   block_greatcourses
  * @copyright 2020 David Herney @ BambuCo
@@ -45,7 +45,7 @@ $string['requirementsfield_help'] = 'A course fueld to load the course requireme
 $string['licensefield'] = 'License field';
 $string['licensefield_help'] = 'A course field to specify the course license';
 $string['newblocktitle'] = 'Great courses';
-$string['showmore'] = 'Ver más...';
+$string['showmore'] = 'Show more...';
 $string['singleamountcourses'] = 'Single amount';
 $string['singleamountcourses_help'] = 'Amount courses to display in default block view';
 $string['notvisible'] = 'This course is not available';
@@ -54,8 +54,6 @@ $string['mediafield'] = 'Media field';
 $string['mediafield_help'] = 'A course field to specify a special course video URL';
 $string['durationfield'] = 'Duration field';
 $string['durationfield_help'] = 'A course field to specify the course duration time.';
-$string['thematictitle'] = 'What will I learn?';
-$string['durationtitle'] = 'Duration time';
 $string['sharecourse'] = 'Share the course';
 $string['sharecoursedesc'] = 'Do you know someone who might like this course?<br />
 <strong>Tell him about it</strong>';
@@ -71,5 +69,7 @@ $string['enrollrequired'] = 'You need to enroll to take the course!';
 $string['enroll'] = 'Enroll';
 $string['notenrollable'] = 'Course currently unavailable to enroll!';
 $string['gotocourse'] = 'Go to course';
-$string[''] = '';
-$string[''] = '';
+$string['returntocatalog'] = 'Go to Catalog';
+$string['greats'] = 'Greats';
+$string['recents'] = 'Recents';
+$string['defaultsort'] = 'All';
