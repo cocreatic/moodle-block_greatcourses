@@ -60,3 +60,107 @@
 .block_greatcourses .panel-foot .btn:hover {
     background-color: #4c6295;
 }
+
+.page-blocks-greatcourses-index .catalog-return {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
+
+.page-blocks-greatcourses-index .catalog-return a {
+    padding: 5px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.page-blocks-greatcourses-index .coursessearch-box {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.page-blocks-greatcourses-index .coursessearch-box form {
+    display: block;
+    border-radius: 10px;
+    padding: 0 10px;
+}
+
+.page-blocks-greatcourses-index .coursessearch-box input {
+    border: none;
+    width: calc(100% - 40px);
+    outline: none;
+}
+
+.page-blocks-greatcourses-index .coursessearch-box button {
+    width: 30px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+.page-blocks-greatcourses-index .coursessearch-box button:hover {
+    opacity: 0.8;
+}
+
+.page-blocks-greatcourses-index .courses-sort {
+    margin: 20px 0;
+}
+
+.page-blocks-greatcourses-index .courses-sort ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.page-blocks-greatcourses-index .courses-sort li {
+    margin: 0 10px;
+}
+
+.page-blocks-greatcourses-index .courses-sort li a {
+    position: relative;
+}
+
+.page-blocks-greatcourses-index .courses-sort li a:after {
+    height: 30px;
+    width: 30px;
+    transform: rotate(45deg);
+    position: absolute;
+    bottom: -40px;
+    left: calc(50% - 15px);
+}
+
+.page-blocks-greatcourses-index .courses-sort.sort-by-default li a[data-sort="default"] {
+    font-weight: bold;
+    border-bottom: 2px solid;
+}
+
+.page-blocks-greatcourses-index .courses-sort.sort-by-default li a[data-sort="default"]:after {
+    content: "";
+}
+
+.page-blocks-greatcourses-index .courses-sort.sort-by-recents li a[data-sort="recents"] {
+    font-weight: bold;
+    border-bottom: 2px solid;
+}
+
+.page-blocks-greatcourses-index .courses-sort.sort-by-recents li a[data-sort="recents"]:after {
+    content: "";
+}
+
+.page-blocks-greatcourses-index .courses-sort.sort-by-greats li a[data-sort="greats"] {
+    font-weight: bold;
+    border-bottom: 2px solid;
+}
+
+.page-blocks-greatcourses-index .courses-sort.sort-by-greats li a[data-sort="greats"]:after {
+    content: "";
+}
+
+.page-blocks-greatcourses-index #page-blocks-greatcourses-index .courses {
+    padding: 40px 10px;
+}
