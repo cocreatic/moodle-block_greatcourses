@@ -31,6 +31,7 @@ $string['greatcourses:myaddinstance'] = 'Adicionar un nuevo bloque de Cursos des
 
 $string['privacy:metadata'] = 'El bloque de cursos destacados no almacena datos personales.';
 
+$string['customtitle'] = 'Título personalizado';
 $string['amountcourses'] = 'Cantidad de cursos';
 $string['amountcourses_help'] = 'Cantidad de cursos a mostrar en la vista general.';
 $string['thematicfield'] = 'Campo Temáticas';

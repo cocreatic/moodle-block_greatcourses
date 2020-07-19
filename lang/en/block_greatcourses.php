@@ -31,6 +31,7 @@ $string['greatcourses:myaddinstance'] = 'Add a new Great courses block to Dashbo
 
 $string['privacy:metadata'] = 'The Great courses block does not store any data itself.';
 
+$string['customtitle'] = 'Custom title';
 $string['amountcourses'] = 'Amount courses';
 $string['amountcourses_help'] = 'Amount courses to display in the main view.';
 $string['thematicfield'] = 'Thematic field';
