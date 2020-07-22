@@ -61,7 +61,7 @@ class detail implements renderable, templatable {
         global $CFG, $OUTPUT, $PAGE, $USER;
 
         // Load social networks.
-        $networks = get_config('block_boalist', 'networks');
+        $networks = get_config('block_greatcourses', 'networks');
         $networkslist = explode("\n", $networks);
         $socialnetworks = array();
 
