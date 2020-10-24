@@ -88,4 +88,11 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configtextarea($name, $title, $help, '');
     $settings->add($setting);
 
+    // Categories filter.
+    $name = 'block_greatcourses/categories';
+    $title = get_string('categories', 'block_greatcourses');
+    $help = get_string('categories_help', 'block_greatcourses');
+    $setting = new admin_setting_configtext($name, $title, $help, '');
+    $settings->add($setting);
+
 }

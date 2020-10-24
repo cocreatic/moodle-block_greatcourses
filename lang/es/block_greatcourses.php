@@ -74,3 +74,5 @@ $string['returntocatalog'] = 'Ir al catálogo de cursos';
 $string['greats'] = 'Destacados';
 $string['recents'] = 'Nuevos';
 $string['defaultsort'] = 'Todos';
+$string['categories'] = 'Categorias';
+$string['categories_help'] = 'Categorias en las que buscar los cursos. Se usa el id numérico de la categoría y la coma como separador.';

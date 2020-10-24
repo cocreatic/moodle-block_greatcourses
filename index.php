@@ -52,6 +52,22 @@ if (empty($sort) || !in_array($sort, $availablesorting)) {
 $select = 'visible = 1 AND id != ' . SITEID;
 $params = array();
 
+// Categories filter.
+$categories = get_config('block_greatcourses', 'categories');
+
+$categoriesids = array();
+$catslist = explode(',', $categories);
+foreach($catslist as $catid) {
+    if (is_numeric($catid)) {
+        $categoriesids[] = (int)trim($catid);
+    }
+}
+
+if (count($categoriesids) > 0) {
+    $select .= ' AND category IN (' . implode(',', $categoriesids) . ')';
+}
+// End Categories filter.
+
 if (!empty($query)) {
     $q = trim($query);
     $q = str_replace(' ', '%', $q);

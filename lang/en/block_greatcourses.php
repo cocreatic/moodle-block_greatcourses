@@ -74,3 +74,5 @@ $string['returntocatalog'] = 'Go to Catalog';
 $string['greats'] = 'Greats';
 $string['recents'] = 'Recents';
 $string['defaultsort'] = 'All';
+$string['categories'] = 'Categories';
+$string['categories_help'] = 'Categories to search courses. Each category numeric id separated by comma.';
