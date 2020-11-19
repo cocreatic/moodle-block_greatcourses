@@ -76,3 +76,5 @@ $string['recents'] = 'Recents';
 $string['defaultsort'] = 'All';
 $string['categories'] = 'Categories';
 $string['categories_help'] = 'Categories to search courses. Each category numeric id separated by comma.';
+$string['summary'] = 'Summary';
+$string['summary_help'] = 'The content is displayed in page top of courses list and course detail.';

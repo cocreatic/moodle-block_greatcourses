@@ -95,4 +95,10 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configtext($name, $title, $help, '');
     $settings->add($setting);
 
+    // Block summary.
+    $name = 'block_greatcourses/summary';
+    $title = get_string('summary', 'block_greatcourses');
+    $help = get_string('summary_help', 'block_greatcourses');
+    $setting = new admin_setting_confightmleditor($name, $title, $help, '');
+    $settings->add($setting);
 }

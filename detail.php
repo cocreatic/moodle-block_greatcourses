@@ -67,6 +67,10 @@ if ($enroll) {
 
 echo $OUTPUT->header();
 
+$summary = get_config('block_greatcourses', 'summary');
+
+echo format_text($summary, FORMAT_MOODLE);
+
 if (!$course->visible) {
     echo get_string('notvisible', 'block_greatcourses');
 } else {
