@@ -32,6 +32,10 @@ $PAGE->set_title(get_string('coursedetail', 'block_greatcourses'));
 
 echo $OUTPUT->header();
 
+$summary = get_config('block_greatcourses', 'summary');
+
+echo format_text($summary, FORMAT_MOODLE);
+
 $amount = get_config('block_greatcourses', 'amount');
 
 if (!$amount || !is_numeric($amount)) {

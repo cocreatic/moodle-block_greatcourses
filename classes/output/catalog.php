@@ -76,7 +76,7 @@ class catalog implements renderable, templatable {
             }
 
             if (empty($courseimage)) {
-                $courseimage = new \moodle_url($CFG->wwwroot . '/blocks/greatcourses/pix/course.png');
+                $courseimage = new \moodle_url($CFG->wwwroot . '/blocks/greatcourses/pix/course_small.png');
             }
 
             $course->imagepath = $courseimage;

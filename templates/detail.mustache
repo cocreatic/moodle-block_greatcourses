@@ -40,14 +40,62 @@
 
     <div class="content-detail">
 
-{{#custom}}
-    {{#duration}}
-        <div class="duration-title">
-            <h3>{{title}}</h3>
-            <span>{{value}}</span>
+        <div class="ranking_detail">
         </div>
-    {{/duration}}
-{{/custom}}
+
+        <div class="context-detail">
+            <div class="experts-duration">
+                {{#custom}}
+                    {{#experts}}
+                        <div class="duration-title">
+                            <h3>{{title}}</h3>
+                            <span>{{value}}</span>
+                        </div>
+                    {{/experts}}
+                    {{#duration}}
+                        <div class="duration-title">
+                            <h3>{{title}}</h3>
+                            <span>{{value}}</span>
+                        </div>
+                    {{/duration}}
+                {{/custom}}
+            </div>
+            {{#custom}}
+                {{#objective}}
+                    <div class="objective">
+                        {{.}}
+                    </div>
+                {{/objective}}
+            {{/custom}}
+        </div>
+
+        <div class="share-container">
+            <h3>{{#str}}sharecourse, block_greatcourses{{/str}}</h3>
+
+            <div class="share-content">
+                <div>
+                    {{#str}}sharecoursedesc, block_greatcourses{{/str}}
+                </div>
+                <div class="share-icons">
+{{#networks}}
+                        <a href="{{url}}" target="_blank">
+                            <i class="fa fa-{{icon}}"></i>
+                        </a>
+{{/networks}}
+                </div>
+
+                <div class="input-container">
+                    <div class="input-group">
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="fa fa-link"></i>
+                            </span>
+                        </div>
+                        <input type="text" name="courselink" aria-label="course link" value="{{baseurl}}/course/view.php?id={{#course}}{{id}}{{/course}}">
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="media-container">
 {{#custom}}
@@ -96,33 +144,6 @@
         </div>
     {{/thematic}}
 {{/custom}}
-        <div class="share-container">
-            <h3>{{#str}}sharecourse, block_greatcourses{{/str}}</h3>
-
-            <div class="share-content">
-                <div>
-                    {{#str}}sharecoursedesc, block_greatcourses{{/str}}
-                </div>
-                <div class="share-icons">
-{{#networks}}
-                        <a href="{{url}}" target="_blank">
-                            <i class="fa fa-{{icon}}"></i>
-                        </a>
-{{/networks}}
-                </div>
-
-                <div class="input-container">
-                    <div class="input-group">
-                        <div class="input-group-append">
-                            <span class="input-group-text">
-                                <i class="fa fa-link"></i>
-                            </span>
-                        </div>
-                        <input type="text" name="courselink" aria-label="course link" value="{{baseurl}}/course/view.php?id={{#course}}{{id}}{{/course}}">
-                    </div>
-                </div>
-            </div>
-        </div>
 
 {{#custom}}
     {{#units}}
