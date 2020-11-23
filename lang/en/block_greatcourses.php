@@ -55,6 +55,10 @@ $string['mediafield'] = 'Media field';
 $string['mediafield_help'] = 'A course field to specify a special course video URL';
 $string['durationfield'] = 'Duration field';
 $string['durationfield_help'] = 'A course field to specify the course duration time.';
+$string['expertsfield'] = 'Experts field';
+$string['expertsfield_help'] = 'A course field to specify the course experts.';
+$string['expertsshortfield'] = 'Experts short field';
+$string['expertsshortfield_help'] = 'A course field to specify the course experts in a short format.';
 $string['sharecourse'] = 'Share the course';
 $string['sharecoursedesc'] = 'Do you know someone who might like this course?<br />
 <strong>Tell him about it</strong>';
@@ -78,3 +82,5 @@ $string['categories'] = 'Categories';
 $string['categories_help'] = 'Categories to search courses. Each category numeric id separated by comma.';
 $string['summary'] = 'Summary';
 $string['summary_help'] = 'The content is displayed in page top of courses list and course detail.';
+$string['detailinfo'] = 'Detail info';
+$string['detailinfo_help'] = 'General info about the course detail.';

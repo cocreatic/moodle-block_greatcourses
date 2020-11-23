@@ -43,17 +43,17 @@
         <div class="ranking_detail">
         </div>
 
-        <div class="context-detail">
+        <div class="context-detail content-layout">
             <div class="experts-duration">
                 {{#custom}}
-                    {{#experts}}
-                        <div class="duration-title">
+                    {{#expertsshort}}
+                        <div class="expert-box">
                             <h3>{{title}}</h3>
-                            <span>{{value}}</span>
+                            <span>{{{value}}}</span>
                         </div>
-                    {{/experts}}
+                    {{/expertsshort}}
                     {{#duration}}
-                        <div class="duration-title">
+                        <div class="duration-box">
                             <h3>{{title}}</h3>
                             <span>{{value}}</span>
                         </div>
@@ -61,15 +61,19 @@
                 {{/custom}}
             </div>
             {{#custom}}
-                {{#objective}}
-                    <div class="objective">
-                        {{.}}
+                {{#thematic}}
+                    <div class="thematic-box">
+                            <h3>{{title}}</h3>
+                            <span>{{{value}}}</span>
                     </div>
-                {{/objective}}
+                {{/thematic}}
             {{/custom}}
         </div>
 
-        <div class="share-container">
+    </div>
+
+    <div class="share-container">
+        <div class="content-layout">
             <h3>{{#str}}sharecourse, block_greatcourses{{/str}}</h3>
 
             <div class="share-content">
@@ -78,9 +82,9 @@
                 </div>
                 <div class="share-icons">
 {{#networks}}
-                        <a href="{{url}}" target="_blank">
-                            <i class="fa fa-{{icon}}"></i>
-                        </a>
+                    <a href="{{url}}" target="_blank">
+                        <i class="fa fa-{{icon}}"></i>
+                    </a>
 {{/networks}}
                 </div>
 
@@ -96,8 +100,10 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="media-container">
+    <div class="media-container">
+        <div class="content-layout">
 {{#custom}}
     {{#media}}
             <div class="media-content">
@@ -125,7 +131,6 @@
                         <a href="{{baseurl}}/blocks/greatcourses/detail.php?id={{#course}}{{id}}{{/course}}&enroll=1" class="btn btn-primary">
                             {{#str}}enroll, block_greatcourses{{/str}}
                         </a>
-                    </div>
         {{/enrollable}}
         {{^enrollable}}
                         <p>{{#str}}notenrollable, block_greatcourses{{/str}}</p>
@@ -136,36 +141,45 @@
                 </div>
             </div>
         </div>
-{{#custom}}
-    {{#thematic}}
-        <h3>{{title}}</h3>
-        <div class="content-box what-to-learn">
-            {{{value}}}
-        </div>
-    {{/thematic}}
-{{/custom}}
+    </div>
 
+    <div class="info-container">
 {{#custom}}
     {{#units}}
-        <h3>{{title}}</h3>
-        <div class="content-box">
-            {{{value}}}
+        <div class="content-layout">
+            <h3>{{title}}</h3>
+            <div class="content-box units">
+                {{{value}}}
+            </div>
         </div>
     {{/units}}
 {{/custom}}
 
-        <div class="detail-foot">
 {{#custom}}
     {{#requirements}}
+        <div class="content-layout">
             <h3>{{title}}</h3>
-            <div class="content-box">
+            <div class="content-box requirements">
                 {{{value}}}
             </div>
+        </div>
     {{/requirements}}
 {{/custom}}
 
 {{#custom}}
+    {{#experts}}
+        <div class="content-layout">
+            <h3>{{title}}</h3>
+            <div class="content-box experts">
+                {{{value}}}
+            </div>
+        </div>
+    {{/experts}}
+{{/custom}}
+
+{{#custom}}
     {{#license}}
+        <div class="content-layout">
             <h3>{{title}}</h3>
             <div class="content-box license">
                 {{#path}}
@@ -179,8 +193,20 @@
                     {{text}}
                 {{/path}}
             </div>
+        </div>
     {{/license}}
 {{/custom}}
+    </div>
+
+{{#detailinfo}}
+    <div class="detailinfo">
+        <div class="content-layout">
+            {{{detailinfo}}}
         </div>
+    </div>
+{{/detailinfo}}
+
+    <div class="detail-foot">
+
     </div>
 </div>

@@ -81,6 +81,20 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configtext($name, $title, $help, '');
     $settings->add($setting);
 
+    // Experts field.
+    $name = 'block_greatcourses/experts';
+    $title = get_string('expertsfield', 'block_greatcourses');
+    $help = get_string('expertsfield_help', 'block_greatcourses');
+    $setting = new admin_setting_configtext($name, $title, $help, '');
+    $settings->add($setting);
+
+    // Short experts field.
+    $name = 'block_greatcourses/expertsshort';
+    $title = get_string('expertsshortfield', 'block_greatcourses');
+    $help = get_string('expertsshortfield_help', 'block_greatcourses');
+    $setting = new admin_setting_configtext($name, $title, $help, '');
+    $settings->add($setting);
+
     // Social networks.
     $name = 'block_greatcourses/networks';
     $title = get_string('socialnetworks', 'block_greatcourses');
@@ -99,6 +113,13 @@ if ($ADMIN->fulltree) {
     $name = 'block_greatcourses/summary';
     $title = get_string('summary', 'block_greatcourses');
     $help = get_string('summary_help', 'block_greatcourses');
+    $setting = new admin_setting_confightmleditor($name, $title, $help, '');
+    $settings->add($setting);
+
+    // Block detail info.
+    $name = 'block_greatcourses/detailinfo';
+    $title = get_string('detailinfo', 'block_greatcourses');
+    $help = get_string('detailinfo_help', 'block_greatcourses');
     $setting = new admin_setting_confightmleditor($name, $title, $help, '');
     $settings->add($setting);
 

@@ -60,6 +60,10 @@ class detail implements renderable, templatable {
     public function export_for_template(renderer_base $output) {
         global $CFG, $OUTPUT, $PAGE, $USER;
 
+        // Course detail info.
+        $detailinfo = get_config('block_greatcourses', 'detailinfo');
+        $detailinfo = format_text($detailinfo, FORMAT_MOODLE);
+
         // Load social networks.
         $networks = get_config('block_greatcourses', 'networks');
         $networkslist = explode("\n", $networks);
@@ -101,7 +105,7 @@ class detail implements renderable, templatable {
         // Load custom course fields.
         $handler = \core_customfield\handler::get_handler('core_course', 'course');
         $datas = $handler->get_instance_data($this->course->id);
-        $fields = array('thematic', 'units', 'requirements', 'license', 'media', 'duration');
+        $fields = array('thematic', 'units', 'requirements', 'license', 'media', 'duration', 'expertsshort', 'experts');
         $custom = new \stdClass();
 
         $fieldsnames = array();
@@ -162,7 +166,8 @@ class detail implements renderable, templatable {
             'courseimages' => $courseimages,
             'custom' => $custom,
             'baseurl' => $CFG->wwwroot,
-            'networks' => $socialnetworks
+            'networks' => $socialnetworks,
+            'detailinfo' => $detailinfo
         ];
 
         return $defaultvariables;
