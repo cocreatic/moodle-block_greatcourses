@@ -58,7 +58,7 @@ class detail implements renderable, templatable {
      * @return array Context variables for the template
      */
     public function export_for_template(renderer_base $output) {
-        global $CFG, $OUTPUT, $PAGE, $USER;
+        global $CFG, $OUTPUT, $PAGE, $USER, $DB;
 
         // Course detail info.
         $detailinfo = get_config('block_greatcourses', 'detailinfo');
@@ -155,9 +155,15 @@ class detail implements renderable, templatable {
             }
         }
 
+        $completed = $DB->get_record('course_completions', array('userid' => $USER->id, 'course' => $this->course->id));
+
         $coursecontext = \context_course::instance($this->course->id, $USER, '', true);
         $custom->enrolled = !(isguestuser() || !isloggedin() || !is_enrolled($coursecontext));
         // Check enroled status.
+
+        $custom->completed = $completed && $completed->timecompleted;
+
+        $enrollstate = $custom->completed ? 'completed' : ($custom->enrolled ? 'enrolled' : 'none');
 
         // End Check enroled status.
 
@@ -167,7 +173,8 @@ class detail implements renderable, templatable {
             'custom' => $custom,
             'baseurl' => $CFG->wwwroot,
             'networks' => $socialnetworks,
-            'detailinfo' => $detailinfo
+            'detailinfo' => $detailinfo,
+            'enrollstate' => $enrollstate
         ];
 
         return $defaultvariables;

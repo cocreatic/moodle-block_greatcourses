@@ -84,3 +84,6 @@ $string['summary'] = 'Summary';
 $string['summary_help'] = 'The content is displayed in page top of courses list and course detail.';
 $string['detailinfo'] = 'Detail info';
 $string['detailinfo_help'] = 'General info about the course detail.';
+$string['waiting'] = 'Waiting';
+$string['viewall'] = 'View all';
+$string['completed'] = 'Course completed';

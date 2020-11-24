@@ -25,7 +25,7 @@
 
 <div class="courses">
     {{#courses}}
-    <div class="panel panel-default coursebox">
+    <div class="panel panel-default coursebox state-{{#active}}active{{/active}}{{^active}}waiting{{/active}}"">
         <div class="courseimage" style="background-image: url({{imagepath}});"></div>
         <div class="panel-heading"></div>
         <div class="panel-body clearfix">
@@ -40,6 +40,10 @@
                 </span>
             </a>
         </div>
+        {{^active}}
+            <div class="waiting-label">{{#str}}waiting, block_greatcourses{{/str}}</div>
+        {{/active}}
     </div>
     {{/courses}}
 </div>
+<a href="{{baseurl}}/blocks/greatcourses/" class="btn btn-primary btn-block">{{#str}}viewall, block_greatcourses{{/str}}</a>

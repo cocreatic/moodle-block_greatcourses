@@ -57,7 +57,7 @@ class catalog implements renderable, templatable {
      * @param array $courses A courses list
      */
     public function __construct($courses = array(), $query = '', $sort = '') {
-        global $CFG;
+        global $CFG, $OUTPUT;
 
         // Load the course image.
         foreach ($courses as $course) {
@@ -76,7 +76,8 @@ class catalog implements renderable, templatable {
             }
 
             if (empty($courseimage)) {
-                $courseimage = new \moodle_url($CFG->wwwroot . '/blocks/greatcourses/pix/course_small.png');
+                $courseimage = $OUTPUT->get_generated_image_for_id($course->id);
+                //new \moodle_url($CFG->wwwroot . '/blocks/greatcourses/pix/course_small.png');
             }
 
             $course->imagepath = $courseimage;
@@ -84,6 +85,9 @@ class catalog implements renderable, templatable {
             if (property_exists($course, 'rating') && $course->rating > 0) {
                 $course->rating = range(1, $course->rating);
             }
+
+            // If course is active or waiting.
+            $course->active = $course->startdate <= time();
         }
 
         $this->courses = $courses;

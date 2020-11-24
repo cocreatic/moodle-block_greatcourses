@@ -114,28 +114,35 @@
             </div>
     {{/media}}
 {{/custom}}
-            <div class="enroll-content">
+            <div class="enroll-content enrollstate-{{enrollstate}}">
                 <div class="enroll-container">
-                    <div class="enroll-content">
+                    <div>
 {{#custom}}
-    {{#enrolled}}
-                        {{# pix }} check, block_greatcourses {{/ pix }}
+    {{#completed}}
+                        <p>{{#str}}completed, block_greatcourses{{/str}}</p>
+                        <a href="{{baseurl}}/course/view.php?id={{#course}}{{id}}{{/course}}" class="btn btn-primary">
+                            {{#str}}gotocourse, block_greatcourses{{/str}}
+                        </a>
+    {{/completed}}
+    {{^completed}}
+        {{#enrolled}}
                         <p>{{#str}}enrolled, block_greatcourses{{/str}}</p>
                         <a href="{{baseurl}}/course/view.php?id={{#course}}{{id}}{{/course}}" class="btn btn-primary">
                             {{#str}}gotocourse, block_greatcourses{{/str}}
                         </a>
-    {{/enrolled}}
-    {{^enrolled}}
-        {{#enrollable}}
+        {{/enrolled}}
+        {{^enrolled}}
+            {{#enrollable}}
                         <p>{{#str}}enrollrequired, block_greatcourses{{/str}}</p>
                         <a href="{{baseurl}}/blocks/greatcourses/detail.php?id={{#course}}{{id}}{{/course}}&enroll=1" class="btn btn-primary">
                             {{#str}}enroll, block_greatcourses{{/str}}
                         </a>
-        {{/enrollable}}
-        {{^enrollable}}
+            {{/enrollable}}
+            {{^enrollable}}
                         <p>{{#str}}notenrollable, block_greatcourses{{/str}}</p>
-        {{/enrollable}}
-    {{/enrolled}}
+            {{/enrollable}}
+        {{/enrolled}}
+    {{/completed}}
 {{/custom}}
                     </div>
                 </div>
