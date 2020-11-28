@@ -86,19 +86,31 @@ class detail implements renderable, templatable {
         // Build course images list.
         $coursefull = new \core_course_list_element($this->course);
 
-        $courseimages = array();
+        $courseimages = '';
         foreach ($coursefull->get_course_overviewfiles() as $file) {
             $isimage = $file->is_valid_image();
             $url = file_encode_url("$CFG->wwwroot/pluginfile.php",
                     '/'. $file->get_contextid(). '/'. $file->get_component(). '/'.
                     $file->get_filearea(). $file->get_filepath(). $file->get_filename(), !$isimage);
             if ($isimage) {
-                $courseimages[] = $url;
+                $courseimage = $url;
+                break;
             }
         }
 
-        if (count($courseimages) == 0) {
-            $courseimages[] = new \moodle_url($CFG->wwwroot . '/blocks/greatcourses/pix/course.png');
+        if (empty($courseimage)) {
+            $type = get_config('block_greatcourses', 'coverimagetype');
+
+            switch ($type) {
+                case 'generated':
+                    $courseimage = $OUTPUT->get_generated_image_for_id($course->id);
+                break;
+                case 'none':
+                    $courseimage = '';
+                break;
+                default:
+                    $courseimage = new \moodle_url($CFG->wwwroot . '/blocks/greatcourses/pix/course.png');
+            }
         }
         // End Build course images list.
 

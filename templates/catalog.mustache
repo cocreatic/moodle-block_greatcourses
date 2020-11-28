@@ -41,8 +41,8 @@
 </div>
 <div class="courses">
     {{#courses}}
-    <div class="panel panel-default coursebox state-{{#active}}active{{/active}}{{^active}}waiting{{/active}}">
-        <div class="courseimage" style="background-image: url({{imagepath}});"></div>
+    <div class="panel panel-default coursebox coursecategory-{{category}} state-{{#active}}active{{/active}}{{^active}}waiting{{/active}}">
+        <div class="courseimage" {{#imagepath}}style="background-image: url({{imagepath}});"{{/imagepath}}></div>
         <div class="panel-heading">
             {{#rating}}{{#pix}}i/star{{/pix}}{{/rating}}
         </div>

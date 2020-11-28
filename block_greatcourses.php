@@ -105,18 +105,4 @@ class block_greatcourses extends block_base {
         return false;
     }
 
-    private function choosepreview($item) {
-        if (property_exists($item->manifest, 'alternate') && property_exists($item->manifest, 'entrypoint')) {
-            $alterpath = $item->about . '/!/.alternate/' . $item->manifest->entrypoint;
-
-            if (in_array('preview.png', $item->manifest->alternate)) {
-                return $alterpath . '/preview.png';
-            } else if (in_array('thumb.png', $item->manifest->alternate)) {
-                return $alterpath . '/thumb.png';
-            }
-        }
-
-        return $item->manifest->customicon;
-    }
-
 }

@@ -123,4 +123,17 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_confightmleditor($name, $title, $help, '');
     $settings->add($setting);
 
+    // Cover image type.
+    $options = array(
+        'default' => get_string('coverimagetype_default', 'block_greatcourses'),
+        'generated' => get_string('coverimagetype_generated', 'block_greatcourses'),
+        'none' => get_string('coverimagetype_none', 'block_greatcourses'),
+    );
+
+    $name = 'block_greatcourses/coverimagetype';
+    $title = get_string('coverimagetype', 'block_greatcourses');
+    $help = get_string('coverimagetype_help', 'block_greatcourses');
+    $setting = new admin_setting_configselect($name, $title, $help, 'default', $options);
+    $settings->add($setting);
+
 }

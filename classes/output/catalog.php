@@ -76,8 +76,18 @@ class catalog implements renderable, templatable {
             }
 
             if (empty($courseimage)) {
-                $courseimage = $OUTPUT->get_generated_image_for_id($course->id);
-                //new \moodle_url($CFG->wwwroot . '/blocks/greatcourses/pix/course_small.png');
+                $type = get_config('block_greatcourses', 'coverimagetype');
+
+                switch ($type) {
+                    case 'generated':
+                        $courseimage = $OUTPUT->get_generated_image_for_id($course->id);
+                    break;
+                    case 'none':
+                        $courseimage = '';
+                    break;
+                    default:
+                        $courseimage = new \moodle_url($CFG->wwwroot . '/blocks/greatcourses/pix/course_small.png');
+                }
             }
 
             $course->imagepath = $courseimage;
