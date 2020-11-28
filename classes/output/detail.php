@@ -169,9 +169,27 @@ class detail implements renderable, templatable {
 
         $completed = $DB->get_record('course_completions', array('userid' => $USER->id, 'course' => $this->course->id));
 
+        // Special format to the course name.
+        $coursename = $this->course->fullname;
+        $m = explode(' ', $coursename);
+
+        $first = '';
+        $last = '';
+        foreach ($m as $k => $n) {
+            if ($k < (count($m) / 2)) {
+                $first .= $n . ' ';
+            } else {
+                $last .= $n . ' ';
+            }
+        }
+
+        $coursename = $first . '<span>' . $last . '</span>';
+        // End
+
+
+        // Check enroled status.
         $coursecontext = \context_course::instance($this->course->id, $USER, '', true);
         $custom->enrolled = !(isguestuser() || !isloggedin() || !is_enrolled($coursecontext));
-        // Check enroled status.
 
         $custom->completed = $completed && $completed->timecompleted;
 
@@ -186,7 +204,8 @@ class detail implements renderable, templatable {
             'baseurl' => $CFG->wwwroot,
             'networks' => $socialnetworks,
             'detailinfo' => $detailinfo,
-            'enrollstate' => $enrollstate
+            'enrollstate' => $enrollstate,
+            'coursename' => $coursename
         ];
 
         return $defaultvariables;
