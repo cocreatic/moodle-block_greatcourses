@@ -66,7 +66,7 @@ class block_greatcourses extends block_base {
             $amount = 4;
         }
 
-        $select = 'visible = 1 AND id != ' . SITEID;
+        $select = 'visible = 1 AND id != ' . SITEID . ' AND startdate < ' . time() ;
         $params = array();
 
         // Categories filter.
@@ -85,7 +85,7 @@ class block_greatcourses extends block_base {
         }
 
         // End Categories filter.
-        $courses = $DB->get_records_select('course', $select, $params, 'timecreated DESC', '*', 0, $amount);
+        $courses = $DB->get_records_select('course', $select, $params, 'startdate DESC', '*', 0, $amount);
 
         $html = '';
 
