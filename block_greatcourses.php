@@ -66,7 +66,26 @@ class block_greatcourses extends block_base {
             $amount = 4;
         }
 
-        $courses = $DB->get_records('course', array('visible' => 1), 'timecreated DESC', '*', 0, $amount);
+        $select = 'visible = 1 AND id != ' . SITEID;
+        $params = array();
+
+        // Categories filter.
+        $categories = get_config('block_greatcourses', 'categories');
+
+        $categoriesids = array();
+        $catslist = explode(',', $categories);
+        foreach($catslist as $catid) {
+            if (is_numeric($catid)) {
+                $categoriesids[] = (int)trim($catid);
+            }
+        }
+
+        if (count($categoriesids) > 0) {
+            $select .= ' AND category IN (' . implode(',', $categoriesids) . ')';
+        }
+
+        // End Categories filter.
+        $courses = $DB->get_records_select('course', $select, $params, 'timecreated DESC', '*', 0, $amount);
 
         $html = '';
 
