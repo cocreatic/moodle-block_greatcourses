@@ -66,7 +66,26 @@ class block_greatcourses extends block_base {
             $amount = 4;
         }
 
-        $courses = $DB->get_records('course', array('visible' => 1), 'timecreated DESC', '*', 0, $amount);
+        $select = 'visible = 1 AND id != ' . SITEID . ' AND startdate < ' . time() ;
+        $params = array();
+
+        // Categories filter.
+        $categories = get_config('block_greatcourses', 'categories');
+
+        $categoriesids = array();
+        $catslist = explode(',', $categories);
+        foreach($catslist as $catid) {
+            if (is_numeric($catid)) {
+                $categoriesids[] = (int)trim($catid);
+            }
+        }
+
+        if (count($categoriesids) > 0) {
+            $select .= ' AND category IN (' . implode(',', $categoriesids) . ')';
+        }
+
+        // End Categories filter.
+        $courses = $DB->get_records_select('course', $select, $params, 'startdate DESC', '*', 0, $amount);
 
         $html = '';
 
@@ -84,20 +103,6 @@ class block_greatcourses extends block_base {
 
     public function instance_can_be_docked() {
         return false;
-    }
-
-    private function choosepreview($item) {
-        if (property_exists($item->manifest, 'alternate') && property_exists($item->manifest, 'entrypoint')) {
-            $alterpath = $item->about . '/!/.alternate/' . $item->manifest->entrypoint;
-
-            if (in_array('preview.png', $item->manifest->alternate)) {
-                return $alterpath . '/preview.png';
-            } else if (in_array('thumb.png', $item->manifest->alternate)) {
-                return $alterpath . '/thumb.png';
-            }
-        }
-
-        return $item->manifest->customicon;
     }
 
 }

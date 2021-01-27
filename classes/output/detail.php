@@ -58,7 +58,11 @@ class detail implements renderable, templatable {
      * @return array Context variables for the template
      */
     public function export_for_template(renderer_base $output) {
-        global $CFG, $OUTPUT, $PAGE, $USER;
+        global $CFG, $OUTPUT, $PAGE, $USER, $DB;
+
+        // Course detail info.
+        $detailinfo = get_config('block_greatcourses', 'detailinfo');
+        $detailinfo = format_text($detailinfo, FORMAT_MOODLE);
 
         // Load social networks.
         $networks = get_config('block_greatcourses', 'networks');
@@ -82,26 +86,38 @@ class detail implements renderable, templatable {
         // Build course images list.
         $coursefull = new \core_course_list_element($this->course);
 
-        $courseimages = array();
+        $courseimages = '';
         foreach ($coursefull->get_course_overviewfiles() as $file) {
             $isimage = $file->is_valid_image();
             $url = file_encode_url("$CFG->wwwroot/pluginfile.php",
                     '/'. $file->get_contextid(). '/'. $file->get_component(). '/'.
                     $file->get_filearea(). $file->get_filepath(). $file->get_filename(), !$isimage);
             if ($isimage) {
-                $courseimages[] = $url;
+                $courseimage = $url;
+                break;
             }
         }
 
-        if (count($courseimages) == 0) {
-            $courseimages[] = new \moodle_url($CFG->wwwroot . '/blocks/greatcourses/pix/course.png');
+        if (empty($courseimage)) {
+            $type = get_config('block_greatcourses', 'coverimagetype');
+
+            switch ($type) {
+                case 'generated':
+                    $courseimage = $OUTPUT->get_generated_image_for_id($course->id);
+                break;
+                case 'none':
+                    $courseimage = '';
+                break;
+                default:
+                    $courseimage = new \moodle_url($CFG->wwwroot . '/blocks/greatcourses/pix/course.png');
+            }
         }
         // End Build course images list.
 
         // Load custom course fields.
         $handler = \core_customfield\handler::get_handler('core_course', 'course');
         $datas = $handler->get_instance_data($this->course->id);
-        $fields = array('thematic', 'units', 'requirements', 'license', 'media', 'duration');
+        $fields = array('thematic', 'units', 'requirements', 'license', 'media', 'duration', 'expertsshort', 'experts');
         $custom = new \stdClass();
 
         $fieldsnames = array();
@@ -151,9 +167,33 @@ class detail implements renderable, templatable {
             }
         }
 
+        $completed = $DB->get_record('course_completions', array('userid' => $USER->id, 'course' => $this->course->id));
+
+        // Special format to the course name.
+        $coursename = $this->course->fullname;
+        $m = explode(' ', $coursename);
+
+        $first = '';
+        $last = '';
+        foreach ($m as $k => $n) {
+            if ($k < (count($m) / 2)) {
+                $first .= $n . ' ';
+            } else {
+                $last .= $n . ' ';
+            }
+        }
+
+        $coursename = $first . '<span>' . $last . '</span>';
+        // End
+
+
+        // Check enroled status.
         $coursecontext = \context_course::instance($this->course->id, $USER, '', true);
         $custom->enrolled = !(isguestuser() || !isloggedin() || !is_enrolled($coursecontext));
-        // Check enroled status.
+
+        $custom->completed = $completed && $completed->timecompleted;
+
+        $enrollstate = $custom->completed ? 'completed' : ($custom->enrolled ? 'enrolled' : 'none');
 
         // End Check enroled status.
 
@@ -162,7 +202,10 @@ class detail implements renderable, templatable {
             'courseimages' => $courseimages,
             'custom' => $custom,
             'baseurl' => $CFG->wwwroot,
-            'networks' => $socialnetworks
+            'networks' => $socialnetworks,
+            'detailinfo' => $detailinfo,
+            'enrollstate' => $enrollstate,
+            'coursename' => $coursename
         ];
 
         return $defaultvariables;

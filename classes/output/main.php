@@ -47,7 +47,7 @@ class main implements renderable, templatable {
      * @param array $courses A courses list
      */
     public function __construct($courses = array()) {
-        global $CFG;
+        global $CFG, $OUTPUT;
 
         // Load the course image.
         foreach ($courses as $course) {
@@ -66,10 +66,24 @@ class main implements renderable, templatable {
             }
 
             if (empty($courseimage)) {
-                $courseimage = new \moodle_url($CFG->wwwroot . '/blocks/greatcourses/pix/course.png');
+                $type = get_config('block_greatcourses', 'coverimagetype');
+
+                switch ($type) {
+                    case 'generated':
+                        $courseimage = $OUTPUT->get_generated_image_for_id($course->id);
+                    break;
+                    case 'none':
+                        $courseimage = '';
+                    break;
+                    default:
+                        $courseimage = new \moodle_url($CFG->wwwroot . '/blocks/greatcourses/pix/course_small.png');
+                }
             }
 
             $course->imagepath = $courseimage;
+
+            // If course is active or waiting.
+            $course->active = $course->startdate <= time();
         }
 
         $this->courses = $courses;

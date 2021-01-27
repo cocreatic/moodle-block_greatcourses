@@ -81,6 +81,20 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configtext($name, $title, $help, '');
     $settings->add($setting);
 
+    // Experts field.
+    $name = 'block_greatcourses/experts';
+    $title = get_string('expertsfield', 'block_greatcourses');
+    $help = get_string('expertsfield_help', 'block_greatcourses');
+    $setting = new admin_setting_configtext($name, $title, $help, '');
+    $settings->add($setting);
+
+    // Short experts field.
+    $name = 'block_greatcourses/expertsshort';
+    $title = get_string('expertsshortfield', 'block_greatcourses');
+    $help = get_string('expertsshortfield_help', 'block_greatcourses');
+    $setting = new admin_setting_configtext($name, $title, $help, '');
+    $settings->add($setting);
+
     // Social networks.
     $name = 'block_greatcourses/networks';
     $title = get_string('socialnetworks', 'block_greatcourses');
@@ -93,6 +107,33 @@ if ($ADMIN->fulltree) {
     $title = get_string('categories', 'block_greatcourses');
     $help = get_string('categories_help', 'block_greatcourses');
     $setting = new admin_setting_configtext($name, $title, $help, '');
+    $settings->add($setting);
+
+    // Block summary.
+    $name = 'block_greatcourses/summary';
+    $title = get_string('summary', 'block_greatcourses');
+    $help = get_string('summary_help', 'block_greatcourses');
+    $setting = new admin_setting_confightmleditor($name, $title, $help, '');
+    $settings->add($setting);
+
+    // Block detail info.
+    $name = 'block_greatcourses/detailinfo';
+    $title = get_string('detailinfo', 'block_greatcourses');
+    $help = get_string('detailinfo_help', 'block_greatcourses');
+    $setting = new admin_setting_confightmleditor($name, $title, $help, '');
+    $settings->add($setting);
+
+    // Cover image type.
+    $options = array(
+        'default' => get_string('coverimagetype_default', 'block_greatcourses'),
+        'generated' => get_string('coverimagetype_generated', 'block_greatcourses'),
+        'none' => get_string('coverimagetype_none', 'block_greatcourses'),
+    );
+
+    $name = 'block_greatcourses/coverimagetype';
+    $title = get_string('coverimagetype', 'block_greatcourses');
+    $help = get_string('coverimagetype_help', 'block_greatcourses');
+    $setting = new admin_setting_configselect($name, $title, $help, 'default', $options);
     $settings->add($setting);
 
 }

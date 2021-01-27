@@ -26,77 +26,52 @@
 <div class="catalog-return">
     <a href="{{baseurl}}/blocks/greatcourses/">{{#pix}}i/return, core{{/pix}}  {{#str}}returntocatalog, block_greatcourses{{/str}}</a>
 </div>
-<div class="course-detail">
+<div class="course-detail coursecategory-{{#course}}{{category}}{{/course}}">
     <div class="coursebanner-box">
 {{#courseimages}}
         <img src="{{.}}" />
 {{/courseimages}}
 
-{{#course}}
-        <span class="coursetitle">{{fullname}}</span>
-{{/course}}
+    <span class="coursetitle">{{{coursename}}}</span>
 
     </div>
 
     <div class="content-detail">
 
-{{#custom}}
-    {{#duration}}
-        <div class="duration-title">
-            <h3>{{title}}</h3>
-            <span>{{value}}</span>
+        <div class="ranking_detail">
         </div>
-    {{/duration}}
-{{/custom}}
 
-        <div class="media-container">
-{{#custom}}
-    {{#media}}
-            <div class="media-content">
-                <video controls="controls">
-                    <source src="{{value}}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+        <div class="context-detail content-layout">
+            <div class="experts-duration">
+                {{#custom}}
+                    {{#expertsshort}}
+                        <div class="expert-box">
+                            <h3>{{title}}</h3>
+                            <span>{{{value}}}</span>
+                        </div>
+                    {{/expertsshort}}
+                    {{#duration}}
+                        <div class="duration-box">
+                            <h3>{{title}}</h3>
+                            <span>{{value}}</span>
+                        </div>
+                    {{/duration}}
+                {{/custom}}
             </div>
-    {{/media}}
-{{/custom}}
-            <div class="enroll-content">
-                <div class="enroll-container">
-                    <div class="enroll-content">
-{{#custom}}
-    {{#enrolled}}
-                        {{# pix }} check, block_greatcourses {{/ pix }}
-                        <p>{{#str}}enrolled, block_greatcourses{{/str}}</p>
-                        <a href="{{baseurl}}/course/view.php?id={{#course}}{{id}}{{/course}}" class="btn btn-primary">
-                            {{#str}}gotocourse, block_greatcourses{{/str}}
-                        </a>
-    {{/enrolled}}
-    {{^enrolled}}
-        {{#enrollable}}
-                        <p>{{#str}}enrollrequired, block_greatcourses{{/str}}</p>
-                        <a href="{{baseurl}}/blocks/greatcourses/detail.php?id={{#course}}{{id}}{{/course}}&enroll=1" class="btn btn-primary">
-                            {{#str}}enroll, block_greatcourses{{/str}}
-                        </a>
+            {{#custom}}
+                {{#thematic}}
+                    <div class="thematic-box">
+                            <h3>{{title}}</h3>
+                            <span>{{{value}}}</span>
                     </div>
-        {{/enrollable}}
-        {{^enrollable}}
-                        <p>{{#str}}notenrollable, block_greatcourses{{/str}}</p>
-        {{/enrollable}}
-    {{/enrolled}}
-{{/custom}}
-                    </div>
-                </div>
-            </div>
+                {{/thematic}}
+            {{/custom}}
         </div>
-{{#custom}}
-    {{#thematic}}
-        <h3>{{title}}</h3>
-        <div class="content-box what-to-learn">
-            {{{value}}}
-        </div>
-    {{/thematic}}
-{{/custom}}
-        <div class="share-container">
+
+    </div>
+
+    <div class="share-container">
+        <div class="content-layout">
             <h3>{{#str}}sharecourse, block_greatcourses{{/str}}</h3>
 
             <div class="share-content">
@@ -105,9 +80,9 @@
                 </div>
                 <div class="share-icons">
 {{#networks}}
-                        <a href="{{url}}" target="_blank">
-                            <i class="fa fa-{{icon}}"></i>
-                        </a>
+                    <a href="{{url}}" target="_blank">
+                        <i class="fa fa-{{icon}}"></i>
+                    </a>
 {{/networks}}
                 </div>
 
@@ -123,28 +98,93 @@
                 </div>
             </div>
         </div>
+    </div>
 
+    <div class="media-container">
+        <div class="content-layout">
+{{#custom}}
+    {{#media}}
+            <div class="media-content">
+                <video controls="controls">
+                    <source src="{{value}}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+    {{/media}}
+{{/custom}}
+            <div class="enroll-content enrollstate-{{enrollstate}}">
+                <div class="enroll-container">
+                    <div>
+{{#custom}}
+    {{#completed}}
+                        <p>{{#str}}completed, block_greatcourses{{/str}}</p>
+                        <a href="{{baseurl}}/course/view.php?id={{#course}}{{id}}{{/course}}" class="btn btn-primary">
+                            {{#str}}gotocourse, block_greatcourses{{/str}}
+                        </a>
+    {{/completed}}
+    {{^completed}}
+        {{#enrolled}}
+                        <p>{{#str}}enrolled, block_greatcourses{{/str}}</p>
+                        <a href="{{baseurl}}/course/view.php?id={{#course}}{{id}}{{/course}}" class="btn btn-primary">
+                            {{#str}}gotocourse, block_greatcourses{{/str}}
+                        </a>
+        {{/enrolled}}
+        {{^enrolled}}
+            {{#enrollable}}
+                        <p>{{#str}}enrollrequired, block_greatcourses{{/str}}</p>
+                        <a href="{{baseurl}}/blocks/greatcourses/detail.php?id={{#course}}{{id}}{{/course}}&enroll=1" class="btn btn-primary">
+                            {{#str}}enroll, block_greatcourses{{/str}}
+                        </a>
+            {{/enrollable}}
+            {{^enrollable}}
+                        <p>{{#str}}notenrollable, block_greatcourses{{/str}}</p>
+            {{/enrollable}}
+        {{/enrolled}}
+    {{/completed}}
+{{/custom}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-container">
 {{#custom}}
     {{#units}}
-        <h3>{{title}}</h3>
-        <div class="content-box">
-            {{{value}}}
+        <div class="content-layout units-box">
+            <h3>{{title}}</h3>
+            <div class="content-box units">
+                {{{value}}}
+            </div>
         </div>
     {{/units}}
 {{/custom}}
 
-        <div class="detail-foot">
 {{#custom}}
     {{#requirements}}
+        <div class="content-layout requirements-box">
             <h3>{{title}}</h3>
-            <div class="content-box">
+            <div class="content-box requirements">
                 {{{value}}}
             </div>
+        </div>
     {{/requirements}}
 {{/custom}}
 
 {{#custom}}
+    {{#experts}}
+        <div class="content-layout experts-box">
+            <h3>{{title}}</h3>
+            <div class="content-box experts">
+                {{{value}}}
+            </div>
+        </div>
+    {{/experts}}
+{{/custom}}
+
+{{#custom}}
     {{#license}}
+        <div class="content-layout">
             <h3>{{title}}</h3>
             <div class="content-box license">
                 {{#path}}
@@ -158,8 +198,20 @@
                     {{text}}
                 {{/path}}
             </div>
+        </div>
     {{/license}}
 {{/custom}}
+    </div>
+
+{{#detailinfo}}
+    <div class="detailinfo">
+        <div class="content-layout">
+            {{{detailinfo}}}
         </div>
+    </div>
+{{/detailinfo}}
+
+    <div class="detail-foot">
+
     </div>
 </div>
