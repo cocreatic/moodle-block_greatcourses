@@ -86,7 +86,7 @@ class detail implements renderable, templatable {
         // Build course images list.
         $coursefull = new \core_course_list_element($this->course);
 
-        $courseimages = '';
+        $courseimage = '';
         foreach ($coursefull->get_course_overviewfiles() as $file) {
             $isimage = $file->is_valid_image();
             $url = file_encode_url("$CFG->wwwroot/pluginfile.php",
@@ -199,7 +199,7 @@ class detail implements renderable, templatable {
 
         $defaultvariables = [
             'course' => $this->course,
-            'courseimages' => $courseimages,
+            'courseimages' => $courseimage,
             'custom' => $custom,
             'baseurl' => $CFG->wwwroot,
             'networks' => $socialnetworks,
