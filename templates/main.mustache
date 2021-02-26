@@ -25,25 +25,7 @@
 
 <div class="courses">
     {{#courses}}
-    <div class="panel panel-default coursebox coursecategory-{{category}} state-{{#active}}active{{/active}}{{^active}}waiting{{/active}}">
-        <div class="courseimage" {{#imagepath}}style="background-image: url({{imagepath}});"{{/imagepath}}></div>
-        <div class="panel-heading"></div>
-        <div class="panel-body clearfix">
-            <a class="" title="{{{shortname}}}" href="{{{baseurl}}}/blocks/greatcourses/detail.php?id={{{id}}}">
-                {{{fullname}}}
-            </a>
-        </div>
-        <div class="panel-foot clearfix">
-            <a class="coursebtn submit btn btn-info btn-sm" href="{{{baseurl}}}/blocks/greatcourses/detail.php?id={{{id}}}">
-                <span class="get_stringlink">{{# str }} showmore, block_greatcourses {{/ str }}
-                    <span class="fa fa-chevron-right"></span>
-                </span>
-            </a>
-        </div>
-        {{^active}}
-            <div class="waiting-label">{{#str}}waiting, block_greatcourses{{/str}}</div>
-        {{/active}}
-    </div>
+{{>block_greatcourses/course}}
     {{/courses}}
 </div>
 <a href="{{baseurl}}/blocks/greatcourses/" class="btn btn-primary btn-block">{{#str}}viewall, block_greatcourses{{/str}}</a>

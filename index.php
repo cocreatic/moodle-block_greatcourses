@@ -49,6 +49,11 @@ if ($bmanager->is_known_block_type('rate_course')) {
     $availablesorting[] = 'greats';
 }
 
+if (\block_greatcourses\controller::premium_available()) {
+    $availablesorting[] = 'premium';
+}
+
+
 if (empty($sort) || !in_array($sort, $availablesorting)) {
     $sort = 'default';
 }
@@ -90,15 +95,35 @@ if ($sort == 'greats') {
                 " GROUP BY c.id
                 ORDER BY rating DESC";
     $courses = $DB->get_records_sql($sql, $params, $spage * $amount, $amount);
+    $coursescount = $DB->count_records_select('course', $select, $params);
+} else  if ($sort == 'premium') {
+
+
+    $params['fieldid'] = \block_greatcourses\controller::get_payfieldid();
+
+    $selectpremium = str_replace(' AND id ', ' AND c.id ', $select);
+    $sql = "SELECT c.*
+                FROM {course} AS c
+                INNER JOIN {customfield_data} AS cd ON cd.fieldid = :fieldid AND cd.value != '' AND cd.instanceid = c.id
+                WHERE " . $selectpremium .
+                " ORDER BY c.fullname ASC";
+    $courses = $DB->get_records_sql($sql, $params, $spage * $amount, $amount);
+
+    $sql_count = "SELECT COUNT(1)
+                    FROM {course} AS c
+                    INNER JOIN {customfield_data} AS cd ON fieldid = :fieldid AND cd.value != '' AND cd.instanceid = c.id
+                    WHERE " . $selectpremium;
+
+    $coursescount = $DB->count_records_sql($sql_count, $params);
 } else {
     if ($sort == 'recents') {
         $courses = $DB->get_records_select('course', $select, $params, 'startdate DESC', '*', $spage * $amount, $amount);
     } else {
-        $courses = $DB->get_records_select('course', $select, $params, '', '*', $spage * $amount, $amount);
+        $courses = $DB->get_records_select('course', $select, $params, 'fullname ASC', '*', $spage * $amount, $amount);
     }
+    $coursescount = $DB->count_records_select('course', $select, $params);
 }
 
-$coursescount = $DB->count_records_select('course', $select, $params);
 
 $pagingbar = new paging_bar($coursescount, $spage, $amount, "/blocks/greatcourses/index.php?q={$query}&amp;sort={$sort}&amp;");
 $pagingbar->pagevar = 'spage';

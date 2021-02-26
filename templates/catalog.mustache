@@ -33,6 +33,9 @@
 <div class="courses-sort sort-by-{{sort}}">
     <ul>
         <li><a href="?q={{query}}" data-sort="default">{{#str}}defaultsort, block_greatcourses{{/str}}</a></li>
+{{#premiumavailable}}
+        <li><a href="?sort=premium&q={{query}}" data-sort="premium">{{#str}}premium, block_greatcourses{{/str}}</a></li>
+{{/premiumavailable}}
         <li><a href="?sort=recents&q={{query}}" data-sort="recents">{{#str}}recents, block_greatcourses{{/str}}</a></li>
 {{#rateavailable}}
         <li><a href="?sort=greats&q={{query}}" data-sort="greats">{{#str}}greats, block_greatcourses{{/str}}</a></li>
@@ -41,26 +44,6 @@
 </div>
 <div class="courses">
     {{#courses}}
-    <div class="panel panel-default coursebox coursecategory-{{category}} state-{{#active}}active{{/active}}{{^active}}waiting{{/active}}">
-        <div class="courseimage" {{#imagepath}}style="background-image: url({{imagepath}});"{{/imagepath}}></div>
-        <div class="panel-heading">
-            {{#rating}}{{#pix}}i/star{{/pix}}{{/rating}}
-        </div>
-        <div class="panel-body clearfix">
-            <a class="" title="{{{shortname}}}" href="{{{baseurl}}}/blocks/greatcourses/detail.php?id={{{id}}}">
-                {{{fullname}}}
-            </a>
-        </div>
-        <div class="panel-foot clearfix">
-            <a class="coursebtn submit btn btn-info btn-sm" href="{{{baseurl}}}/blocks/greatcourses/detail.php?id={{{id}}}">
-                <span class="get_stringlink">{{# str }} showmore, block_greatcourses {{/ str }}
-                    <span class="fa fa-chevron-right"></span>
-                </span>
-            </a>
-        </div>
-        {{^active}}
-            <div class="waiting-label">{{#str}}waiting, block_greatcourses{{/str}}</div>
-        {{/active}}
-    </div>
+        {{>block_greatcourses/course}}
     {{/courses}}
 </div>

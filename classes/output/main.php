@@ -24,6 +24,8 @@
 namespace block_greatcourses\output;
 defined('MOODLE_INTERNAL') || die();
 
+//include_once('greatcourses.class.php');
+
 use renderable;
 use renderer_base;
 use templatable;
@@ -51,39 +53,7 @@ class main implements renderable, templatable {
 
         // Load the course image.
         foreach ($courses as $course) {
-            $coursefull = new \core_course_list_element($course);
-
-            $courseimage = '';
-            foreach ($coursefull->get_course_overviewfiles() as $file) {
-                $isimage = $file->is_valid_image();
-                $url = file_encode_url("$CFG->wwwroot/pluginfile.php",
-                        '/'. $file->get_contextid(). '/'. $file->get_component(). '/'.
-                        $file->get_filearea(). $file->get_filepath(). $file->get_filename(), !$isimage);
-                if ($isimage) {
-                    $courseimage = $url;
-                    break;
-                }
-            }
-
-            if (empty($courseimage)) {
-                $type = get_config('block_greatcourses', 'coverimagetype');
-
-                switch ($type) {
-                    case 'generated':
-                        $courseimage = $OUTPUT->get_generated_image_for_id($course->id);
-                    break;
-                    case 'none':
-                        $courseimage = '';
-                    break;
-                    default:
-                        $courseimage = new \moodle_url($CFG->wwwroot . '/blocks/greatcourses/pix/course_small.png');
-                }
-            }
-
-            $course->imagepath = $courseimage;
-
-            // If course is active or waiting.
-            $course->active = $course->startdate <= time();
+            \block_greatcourses\controller::course_preprocess($course);
         }
 
         $this->courses = $courses;

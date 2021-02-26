@@ -48,6 +48,7 @@ class detail implements renderable, templatable {
      */
     public function __construct($course) {
 
+        \block_greatcourses\controller::course_preprocess($course, true);
         $this->course = $course;
     }
 
@@ -69,6 +70,7 @@ class detail implements renderable, templatable {
         $networkslist = explode("\n", $networks);
         $socialnetworks = array();
 
+
         $courseurl = new \moodle_url('/blocks/greatcourses/detail.php', array('id' => $this->course->id));
         foreach ($networkslist as $one) {
 
@@ -82,37 +84,6 @@ class detail implements renderable, templatable {
                 $socialnetworks[] = $network;
             }
         }
-
-        // Build course images list.
-        $coursefull = new \core_course_list_element($this->course);
-
-        $courseimage = '';
-        foreach ($coursefull->get_course_overviewfiles() as $file) {
-            $isimage = $file->is_valid_image();
-            $url = file_encode_url("$CFG->wwwroot/pluginfile.php",
-                    '/'. $file->get_contextid(). '/'. $file->get_component(). '/'.
-                    $file->get_filearea(). $file->get_filepath(). $file->get_filename(), !$isimage);
-            if ($isimage) {
-                $courseimage = $url;
-                break;
-            }
-        }
-
-        if (empty($courseimage)) {
-            $type = get_config('block_greatcourses', 'coverimagetype');
-
-            switch ($type) {
-                case 'generated':
-                    $courseimage = $OUTPUT->get_generated_image_for_id($course->id);
-                break;
-                case 'none':
-                    $courseimage = '';
-                break;
-                default:
-                    $courseimage = new \moodle_url($CFG->wwwroot . '/blocks/greatcourses/pix/course.png');
-            }
-        }
-        // End Build course images list.
 
         // Load custom course fields.
         $handler = \core_customfield\handler::get_handler('core_course', 'course');
@@ -160,7 +131,7 @@ class detail implements renderable, templatable {
         $enrolinstances = enrol_get_instances($this->course->id, true);
 
         $custom->enrollable = false;
-        foreach($enrolinstances as $instance) {
+        foreach ($enrolinstances as $instance) {
             if ($instance->enrol == 'self') {
                 $custom->enrollable = true;
                 break;
@@ -195,11 +166,46 @@ class detail implements renderable, templatable {
 
         $enrollstate = $custom->completed ? 'completed' : ($custom->enrolled ? 'enrolled' : 'none');
 
+        $custom->enroltitle = get_string('notenrollable', 'block_greatcourses');
+        $custom->enrolurl = null;
+        $custom->enrolurllabel = '';
+
+        if ($custom->completed) {
+
+            $custom->enroltitle = get_string('completed', 'block_greatcourses');
+            $custom->enrolurl = new \moodle_url('/course/view.php', array('id' => $this->course->id));
+            $custom->enrolurllabel = get_string('gotocourse', 'block_greatcourses');
+
+        } else if ($custom->enrolled) {
+
+            $custom->enroltitle = get_string('enrolled', 'block_greatcourses');
+            $custom->enrolurl = new \moodle_url('/course/view.php', array('id' => $this->course->id));
+            $custom->enrolurllabel = get_string('gotocourse', 'block_greatcourses');
+
+        } else if ($custom->enrollable) {
+
+            $ispremium = \block_greatcourses\controller::is_user_premium();
+            if ($this->course->paymenturl && !$ispremium) {
+
+                $custom->enroltitle = get_string('paymentrequired', 'block_greatcourses');
+                $custom->enrolurl = $this->course->paymenturl;
+                $custom->enrolurllabel = get_string('paymentbutton', 'block_greatcourses');
+
+            } else {
+
+                $custom->enroltitle = get_string('enrollrequired', 'block_greatcourses');
+                $custom->enrolurl = new \moodle_url('/blocks/greatcourses/detail.php', array('id' => $this->course->id, 'enroll' => 1));
+                $custom->enrolurllabel = get_string('enroll', 'block_greatcourses');
+            }
+
+        }
+
+
+
         // End Check enroled status.
 
         $defaultvariables = [
             'course' => $this->course,
-            'courseimages' => $courseimage,
             'custom' => $custom,
             'baseurl' => $CFG->wwwroot,
             'networks' => $socialnetworks,

@@ -25,18 +25,10 @@ defined('MOODLE_INTERNAL') || die;
 
 if ($ADMIN->fulltree) {
 
-    // Courses in block view.
-    $name = 'block_greatcourses/singleamount';
-    $title = get_string('singleamountcourses', 'block_greatcourses');
-    $help = get_string('singleamountcourses_help', 'block_greatcourses');
-    $setting = new admin_setting_configtext($name, $title, $help, 4, PARAM_INT, 2);
-    $settings->add($setting);
-
-    // Courses by page.
-    $name = 'block_greatcourses/amount';
-    $title = get_string('amountcourses', 'block_greatcourses');
-    $help = get_string('amountcourses_help', 'block_greatcourses');
-    $setting = new admin_setting_configtext($name, $title, $help, 20, PARAM_INT, 5);
+    // Course fields.
+    $name = 'block_greatcourses/settingsheaderfields';
+    $heading = get_string('settingsheaderfields', 'block_greatcourses');
+    $setting = new admin_setting_heading($name, $heading, '');
     $settings->add($setting);
 
     // Thematic field.
@@ -93,6 +85,54 @@ if ($ADMIN->fulltree) {
     $title = get_string('expertsshortfield', 'block_greatcourses');
     $help = get_string('expertsshortfield_help', 'block_greatcourses');
     $setting = new admin_setting_configtext($name, $title, $help, '');
+    $settings->add($setting);
+
+    // Payment fields.
+    $name = 'block_greatcourses/settingsheaderpayment';
+    $heading = get_string('settingsheaderpayment', 'block_greatcourses');
+    $setting = new admin_setting_heading($name, $heading, '');
+    $settings->add($setting);
+
+    // Payment url field.
+    $name = 'block_greatcourses/paymenturl';
+    $title = get_string('paymenturlfield', 'block_greatcourses');
+    $help = get_string('paymenturlfield_help', 'block_greatcourses');
+    $setting = new admin_setting_configtext($name, $title, $help, '');
+    $settings->add($setting);
+
+    // Premium type user field.
+    $name = 'block_greatcourses/premiumfield';
+    $title = get_string('premiumfield', 'block_greatcourses');
+    $help = get_string('premiumfield_help', 'block_greatcourses');
+    $setting = new admin_setting_configtext($name, $title, $help, '');
+    $settings->add($setting);
+
+    // Premium type value.
+    $name = 'block_greatcourses/premiumvalue';
+    $title = get_string('premiumvalue', 'block_greatcourses');
+    $help = get_string('premiumvalue_help', 'block_greatcourses');
+    $setting = new admin_setting_configtext($name, $title, $help, '');
+    $settings->add($setting);
+
+
+    // Appearance.
+    $name = 'block_greatcourses/settingsheaderappearance';
+    $heading = get_string('settingsheaderappearance', 'block_greatcourses');
+    $setting = new admin_setting_heading($name, $heading, '');
+    $settings->add($setting);
+
+    // Courses in block view.
+    $name = 'block_greatcourses/singleamount';
+    $title = get_string('singleamountcourses', 'block_greatcourses');
+    $help = get_string('singleamountcourses_help', 'block_greatcourses');
+    $setting = new admin_setting_configtext($name, $title, $help, 4, PARAM_INT, 2);
+    $settings->add($setting);
+
+    // Courses by page.
+    $name = 'block_greatcourses/amount';
+    $title = get_string('amountcourses', 'block_greatcourses');
+    $help = get_string('amountcourses_help', 'block_greatcourses');
+    $setting = new admin_setting_configtext($name, $title, $help, 20, PARAM_INT, 5);
     $settings->add($setting);
 
     // Social networks.

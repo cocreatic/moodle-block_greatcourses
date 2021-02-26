@@ -45,8 +45,17 @@ if ($enroll) {
 
     $coursecontext = \context_course::instance($course->id, $USER, '', true);
 
+    \block_greatcourses\controller::course_preprocess($course);
+
+    $enrollable = true;
+
+    // Check if the course is only for premium users.
+    if ($course->paymenturl) {
+        $enrollable = \block_greatcourses\controller::is_user_premium();
+    }
+
     // If currently not enrolled.
-    if (!is_enrolled($coursecontext)) {
+    if ($enrollable && !is_enrolled($coursecontext)) {
         $enrolinstances = enrol_get_instances($course->id, true);
         $enrolplugin = enrol_get_plugin('self');
 

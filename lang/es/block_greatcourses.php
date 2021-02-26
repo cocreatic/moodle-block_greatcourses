@@ -23,13 +23,13 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Cursos destacados';
+$string['pluginname'] = 'Cursos disponibles';
 
 // Capabilities.
-$string['greatcourses:addinstance'] = 'Adicionar un nuevo bloque de Cursos destacados';
-$string['greatcourses:myaddinstance'] = 'Adicionar un nuevo bloque de Cursos destacados a Dashboard';
+$string['greatcourses:addinstance'] = 'Adicionar un nuevo bloque de Cursos disponibles';
+$string['greatcourses:myaddinstance'] = 'Adicionar un nuevo bloque de Cursos disponibles a Dashboard';
 
-$string['privacy:metadata'] = 'El bloque de cursos destacados no almacena datos personales.';
+$string['privacy:metadata'] = 'El bloque de cursos disponibles no almacena datos personales.';
 
 $string['customtitle'] = 'Título personalizado';
 $string['amountcourses'] = 'Cantidad de cursos';
@@ -45,7 +45,7 @@ $string['requirementsfield'] = 'Campo Requisitos';
 $string['requirementsfield_help'] = 'El nombre del campo para cargar los requisitos del curso';
 $string['licensefield'] = 'Campo Licencia';
 $string['licensefield_help'] = 'El nombre del campo para cargar la licencia del curso';
-$string['newblocktitle'] = 'Cursos destacados';
+$string['newblocktitle'] = 'Cursos disponibles';
 $string['showmore'] = 'Ver más...';
 $string['singleamountcourses'] = 'Cantidad simple';
 $string['singleamountcourses_help'] = 'Cantidad de cursos a mostrar en la vista por defecto de bloque.';
@@ -55,6 +55,10 @@ $string['mediafield'] = 'Campo Medio';
 $string['mediafield_help'] = 'El nombre del campo para cargar una URL de video del curso';
 $string['durationfield'] = 'Campo Duración';
 $string['durationfield_help'] = 'El nombre del campo para cargar la duración del curso.';
+$string['expertsfield'] = 'Campo de Expertos';
+$string['expertsfield_help'] = 'El nombre del campo para especificar los expertos del curso.';
+$string['expertsshortfield'] = 'Campo resumen de expertos';
+$string['expertsshortfield_help'] = 'El nombre de un campo que indica la versión resumida de los expertos.';
 $string['sharecourse'] = 'Comparte este curso';
 $string['sharecoursedesc'] = '¿Conoces a alguien que le pueda gustar este curso?<br />
 <strong>Cuéntale sobre él</strong>';
@@ -88,3 +92,15 @@ $string['coverimagetype_none'] = 'Ninguna';
 $string['waiting'] = 'Próximamente';
 $string['viewall'] = 'Ver todos';
 $string['completed'] = 'Curso completado';
+$string['paymenturlfield'] = 'Campo de URL de pago';
+$string['paymenturlfield_help'] = '';
+$string['settingsheaderappearance'] = 'Apariencia';
+$string['settingsheaderfields'] = 'Campos del curso';
+$string['settingsheaderpayment'] = 'Opciones para cursos de pago';
+$string['premiumfield'] = 'Campo de usuario premium';
+$string['premiumfield_help'] = '';
+$string['premiumvalue'] = 'Valor de usuario premium';
+$string['premiumvalue_help'] = 'El valor que debe tener el usuario en su perfil en el campo seleccionado como premium';
+$string['premium'] = 'Premium';
+$string['paymentrequired'] = 'Este curso es de pago';
+$string['paymentbutton'] = 'Pagar';
