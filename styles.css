@@ -330,6 +330,8 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    max-height: 200px;
+    overflow: hidden;
 }
 
 #page-blocks-greatcourses-detail .coursebanner-box img {
@@ -352,6 +354,7 @@
     background-color: #aaa;
     background-size: cover;
     background-repeat: no-repeat;
+    position: absolute;
 }
 
 #page-blocks-greatcourses-detail .coursebanner-box .coursetitle span {
@@ -440,3 +443,49 @@
     width: 80px;
     height: 100px;
 }
+
+#page-blocks-greatcourses-detail .ranking_detail {
+    display: flex;
+}
+
+#page-blocks-greatcourses-detail .ranking_detail > div {
+    display: flex;
+    flex-direction: column;
+    border-right: 2px solid #e2e2e2;
+    padding: 0 20px;
+}
+
+#page-blocks-greatcourses-detail .ranking_detail > div label {
+    margin: 0;
+}
+
+#page-blocks-greatcourses-detail .ranking_detail .ranking-stars {
+    width: 130px;
+    height: 25px;
+    position: relative;
+}
+
+#page-blocks-greatcourses-detail .ranking_detail .ranking-stars .icon {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    vertical-align: unset;
+}
+
+#page-blocks-greatcourses-detail .ranking_detail .ranking-stars-bar {
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+#page-blocks-greatcourses-detail .ranking_detail .ranking-stars-bar::after {
+    content: "";
+    position: absolute;
+    background: url('[[pix:block_greatcourses|stars]]') no-repeat;
+    background-size: contain;
+    width: 130px;
+    height: 25px;
+}
+

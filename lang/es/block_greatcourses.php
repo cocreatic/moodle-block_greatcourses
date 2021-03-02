@@ -104,3 +104,5 @@ $string['premiumvalue_help'] = 'El valor que debe tener el usuario en su perfil 
 $string['premium'] = 'Premium';
 $string['paymentrequired'] = 'Este curso es de pago';
 $string['paymentbutton'] = 'Pagar';
+$string['ratingslabel'] = '{$a} calificaciones';
+$string['commentslabel'] = '{$a} comentarios';

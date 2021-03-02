@@ -40,6 +40,21 @@
     <div class="content-detail">
 
         <div class="ranking_detail">
+            {{#rating}}
+            <div>
+                <label>{{ratingformated}}</label>
+                <div class="ranking-stars">
+                    <div class="ranking-stars-bar" style="width: {{ratingpercent}}%;"></div>
+                    {{#pix}}stars_empty, block_greatcourses{{/pix}}
+                </div>
+            </div>
+            <div>
+                <label>{{#str}}ratingslabel, block_greatcourses, {{ratings}} {{/str}}</label>
+            </div>
+            {{/rating}}
+            <div>
+                <label>{{#str}}commentslabel, block_greatcourses, {{commentscount}} {{/str}}</label>
+            </div>
         </div>
 
         <div class="context-detail content-layout">

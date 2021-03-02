@@ -36,7 +36,7 @@ class controller {
     protected static $PAYFIELDID = null;
 
     public static function course_preprocess($course, $large = false) {
-        global $CFG, $OUTPUT, $DB;
+        global $CFG, $OUTPUT, $DB, $PAGE;
 
         $course->paymenturl = null;
         $payfieldid = self::get_payfieldid();
@@ -78,12 +78,40 @@ class controller {
 
         $course->imagepath = $courseimage;
 
-        if (property_exists($course, 'rating') && $course->rating > 0) {
-            $course->rating = range(1, $course->rating);
+        if (!property_exists($course, 'rating')) {
+            $bmanager = new \block_manager($PAGE);
+            if ($bmanager->is_known_block_type('rate_course')) {
+
+                $sql = "SELECT AVG(rating) AS rating, COUNT(1) AS ratings  FROM {block_rate_course} WHERE course = :courseid";
+
+                $rate = $DB->get_record_sql($sql, array('courseid' => $course->id));
+
+                $course->rating = $rate->rating;
+                $course->ratings = $rate->ratings;
+                $course->ratingstars = $rate->rating > 0 ? range(1, $rate->rating) : null;
+            }
+
+        }
+
+        if (property_exists($course, 'rating')) {
+            $course->rating = round($course->rating, 1);
+            $course->ratingpercent = round($course->rating * 20);
+            $course->ratingformated = str_pad($course->rating, 3, '.0');
+            $course->ratingstars = $course->rating > 0 ? range(1, $course->rating) : null;
         }
 
         // If course is active or waiting.
         $course->active = $course->startdate <= time();
+
+        // Load data for course detail.
+        if ($large) {
+            $contextid = $DB->get_field('context', 'id', array('contextlevel' => CONTEXT_COURSE, 'instanceid' => $course->id));
+            $course->commentscount = $DB->count_records('comments', array('contextid' => $contextid, 'component' => 'block_comments'));
+
+            // Get 20 newest records.
+            $course->comments = $DB->get_records('comments', array('contextid' => $contextid, 'component' => 'block_comments'),
+                                                    'timecreated DESC', '*', 20);
+        }
 
     }
 
