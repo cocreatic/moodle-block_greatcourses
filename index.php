@@ -90,7 +90,7 @@ if ($sort == 'greats') {
     $selectgreats = str_replace(' AND id ', ' AND c.id ', $select);
     $sql = "SELECT c.*, AVG(r.rating) AS rating
                 FROM {course} AS c
-                LEFT JOIN {block_rate_course} AS r ON r.course = c.id
+                INNER JOIN {block_rate_course} AS r ON r.course = c.id
                 WHERE " . $selectgreats .
                 " GROUP BY c.id
                 ORDER BY rating DESC";
