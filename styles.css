@@ -422,15 +422,16 @@
 }
 
 #page-blocks-greatcourses-detail .course-detail .detail-foot {
-    padding-top: 20px;
+    padding: 20px;
     margin-top: 30px;
+    display: flex;
 }
 
-#page-blocks-greatcourses-detail .course-detail .detail-foot .license {
+#page-blocks-greatcourses-detail .course-detail .license {
     text-align: center;
 }
 
-#page-blocks-greatcourses-detail .course-detail .detail-foot .license img {
+#page-blocks-greatcourses-detail .course-detail .license img {
     border-width: 0;
 }
 
@@ -444,35 +445,93 @@
     height: 100px;
 }
 
-#page-blocks-greatcourses-detail .ranking_detail {
-    display: flex;
+#page-blocks-greatcourses-detail .ranking-summary {
+        display: flex;
 }
 
-#page-blocks-greatcourses-detail .ranking_detail > div {
+#page-blocks-greatcourses-detail .ranking-summary > div {
     display: flex;
     flex-direction: column;
     border-right: 2px solid #e2e2e2;
     padding: 0 20px;
 }
 
-#page-blocks-greatcourses-detail .ranking_detail > div label {
+#page-blocks-greatcourses-detail .ranking-summary > div label {
     margin: 0;
 }
 
-#page-blocks-greatcourses-detail .ranking_detail .ranking-stars {
+#page-blocks-greatcourses-detail .ranking-detail {
+    max-width: 400px;
+    padding-right: 20px;
+    width: 100%;
+}
+
+#page-blocks-greatcourses-detail .ranking-detail > div:first-child {
+    display: flex;
+    align-items: baseline;
+}
+
+#page-blocks-greatcourses-detail .ranking-detail > div:first-child label {
+    font-size: 40px;
+    display: inline-block;
+    margin: 0 10px 0 0;
+}
+
+#page-blocks-greatcourses-detail .ranking-detail > div .ranking-stars {
+    display: inline-block;
+}
+
+#page-blocks-greatcourses-detail .ranking-detail > div:nth-child(2) {
+    display: flex;
+    flex-direction: column-reverse;
+    margin-top: 20px;
+}
+
+#page-blocks-greatcourses-detail .ranking-detail .ranking-detail-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+#page-blocks-greatcourses-detail .ranking-detail .ranking-detail-item label {
+    white-space: nowrap;
+    padding-right: 10px;
+    margin: 0;
+}
+
+#page-blocks-greatcourses-detail .ranking-detail .ranking-detail-item div:nth-child(3) {
+    white-space: nowrap;
+    width: 50px;
+    text-align: right;
+}
+
+#page-blocks-greatcourses-detail .ranking-detail .ranking-detail-item .rating-bar {
+    height: 10px;
+    border-radius: 5px;
+    background-color: #cfcfcf;
+    width: 100%;
+}
+
+#page-blocks-greatcourses-detail .ranking-detail .ranking-detail-item .rating-bar div {
+    height: 100%;
+    border-radius: 5px;
+    background-color: #ffc500;
+}
+
+#page-blocks-greatcourses-detail .ranking-stars {
     width: 130px;
     height: 25px;
     position: relative;
 }
 
-#page-blocks-greatcourses-detail .ranking_detail .ranking-stars .icon {
+#page-blocks-greatcourses-detail .ranking-stars .icon {
     width: 100%;
     height: 100%;
     margin: 0;
     vertical-align: unset;
 }
 
-#page-blocks-greatcourses-detail .ranking_detail .ranking-stars-bar {
+#page-blocks-greatcourses-detail .ranking-stars-bar {
     overflow: hidden;
     position: absolute;
     left: 0;
@@ -480,7 +539,7 @@
     bottom: 0;
 }
 
-#page-blocks-greatcourses-detail .ranking_detail .ranking-stars-bar::after {
+#page-blocks-greatcourses-detail .ranking-stars-bar::after {
     content: "";
     position: absolute;
     background: url('[[pix:block_greatcourses|stars]]') no-repeat;
@@ -489,3 +548,23 @@
     height: 25px;
 }
 
+#page-blocks-greatcourses-detail .course-comments {
+    width: 100%;
+}
+
+#page-blocks-greatcourses-detail .course-comments > div {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+#page-blocks-greatcourses-detail .course-comments > div img.userpicture {
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+#page-blocks-greatcourses-detail .course-comments > div .timeformated {
+    font-size: 80%;
+    font-style: italic;
+}

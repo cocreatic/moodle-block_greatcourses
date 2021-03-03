@@ -82,22 +82,70 @@ class controller {
             $bmanager = new \block_manager($PAGE);
             if ($bmanager->is_known_block_type('rate_course')) {
 
-                $sql = "SELECT AVG(rating) AS rating, COUNT(1) AS ratings  FROM {block_rate_course} WHERE course = :courseid";
+                if ($large) {
+                    $values = $DB->get_records('block_rate_course', array('course' => $course->id), '', 'id, rating');
 
-                $rate = $DB->get_record_sql($sql, array('courseid' => $course->id));
+                    // Start default array to 1-5 stars.
+                    $ratinglist = [0, 0, 0, 0, 0, 0];
+                    unset($ratinglist[0]);
 
-                $course->rating = $rate->rating;
-                $course->ratings = $rate->ratings;
-                $course->ratingstars = $rate->rating > 0 ? range(1, $rate->rating) : null;
+                    $ratingsum = 0;
+                    foreach ($values as $one) {
+                        $ratinglist[$one->rating]++;
+                        $ratingsum += $one->rating;
+                    }
+
+                    $rating = $ratingsum / count($values);
+                    $ratings = count($values);
+
+                    $ratingpercents = array();
+                    foreach ($ratinglist as $key => $one) {
+                        $ratingpercents[$key] = round($one * 100 / count($values));
+                    }
+                } else {
+                    $sql = "SELECT AVG(rating) AS rating, COUNT(1) AS ratings  FROM {block_rate_course} WHERE course = :courseid";
+                    $rate = $DB->get_record_sql($sql, array('courseid' => $course->id));
+                    $ratinglist = null;
+                    $rating = $rate->rating;
+                    $ratings = $rate->ratings;
+                }
+
+
+                $course->rating = new \stdClass();
+                $course->rating->total = $rating;
+                $course->rating->count = $ratings;
+
+                if ($ratinglist) {
+                    $course->rating->detail = array();
+                    foreach ($ratinglist as $key => $one) {
+                        $detail = new \stdClass();
+                        $detail->value = $key;
+                        $detail->count = $one;
+                        $detail->avg = round($ratingpercents[$key]);
+                        $course->rating->detail[] = $detail;
+                    }
+                } else {
+                    $course->rating->detail = null;
+                }
+
             }
 
         }
 
         if (property_exists($course, 'rating')) {
-            $course->rating = round($course->rating, 1);
-            $course->ratingpercent = round($course->rating * 20);
-            $course->ratingformated = str_pad($course->rating, 3, '.0');
-            $course->ratingstars = $course->rating > 0 ? range(1, $course->rating) : null;
+
+            if (!is_object($course->rating)) {
+                $rating = $course->rating;
+                $course->rating = new \stdClass();
+                $course->rating->total = $rating;
+                $course->rating->count = property_exists($course, 'ratings') ? $course->ratings : 0;
+                $course->rating->detail = null;
+            }
+
+            $course->rating->total = round($course->rating->total, 1);
+            $course->rating->percent = round($course->rating->total * 20);
+            $course->rating->formated = str_pad($course->rating->total, 3, '.0');
+            $course->rating->stars = $course->rating->total > 0 ? range(1, $course->rating->total) : null;
         }
 
         // If course is active or waiting.
@@ -110,7 +158,18 @@ class controller {
 
             // Get 20 newest records.
             $course->comments = $DB->get_records('comments', array('contextid' => $contextid, 'component' => 'block_comments'),
-                                                    'timecreated DESC', '*', 20);
+                                                    'timecreated DESC', '*', 0, 20);
+
+            $course->comments = array_values($course->comments);
+
+            $strftimeformat = get_string('strftimerecentfull', 'langconfig');
+
+            foreach ($course->comments as $comment) {
+                $user = $DB->get_record('user', array('id' => $comment->userid));
+                $userpicture = new \user_picture($user);
+                $comment->userpicture = $userpicture->get_url($PAGE);
+                $comment->timeformated = userdate($comment->timecreated, $strftimeformat);
+            }
         }
 
     }

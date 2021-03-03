@@ -106,3 +106,5 @@ $string['paymentrequired'] = 'Este curso es de pago';
 $string['paymentbutton'] = 'Pagar';
 $string['ratingslabel'] = '{$a} calificaciones';
 $string['commentslabel'] = '{$a} comentarios';
+$string['countstars'] = '{$a} estrellas';
+$string['commentstitle'] = 'Comentarios más recientes';
