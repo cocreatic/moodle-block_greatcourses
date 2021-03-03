@@ -477,7 +477,7 @@
     margin: 0 10px 0 0;
 }
 
-#page-blocks-greatcourses-detail .ranking-detail > div .ranking-stars {
+#page-blocks-greatcourses-detail .ranking-detail > div .greatcourses-ranking-stars {
     display: inline-block;
 }
 
@@ -518,20 +518,20 @@
     background-color: #ffc500;
 }
 
-#page-blocks-greatcourses-detail .ranking-stars {
+.greatcourses-ranking-stars {
     width: 130px;
     height: 25px;
     position: relative;
 }
 
-#page-blocks-greatcourses-detail .ranking-stars .icon {
+.greatcourses-ranking-stars .icon {
     width: 100%;
     height: 100%;
     margin: 0;
     vertical-align: unset;
 }
 
-#page-blocks-greatcourses-detail .ranking-stars-bar {
+.greatcourses-ranking-stars-bar {
     overflow: hidden;
     position: absolute;
     left: 0;
@@ -539,13 +539,18 @@
     bottom: 0;
 }
 
-#page-blocks-greatcourses-detail .ranking-stars-bar::after {
+.greatcourses-ranking-stars-bar::after {
     content: "";
     position: absolute;
     background: url('[[pix:block_greatcourses|stars]]') no-repeat;
     background-size: contain;
     width: 130px;
     height: 25px;
+}
+
+.coursebox .greatcourses-ranking-stars {
+    transform: scale(0.6);
+    transform-origin: left;
 }
 
 #page-blocks-greatcourses-detail .course-comments {

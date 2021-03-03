@@ -132,7 +132,7 @@ class controller {
 
         }
 
-        if (property_exists($course, 'rating')) {
+        if (property_exists($course, 'rating') && $course->rating) {
 
             if (!is_object($course->rating)) {
                 $rating = $course->rating;
@@ -142,10 +142,15 @@ class controller {
                 $course->rating->detail = null;
             }
 
-            $course->rating->total = round($course->rating->total, 1);
-            $course->rating->percent = round($course->rating->total * 20);
-            $course->rating->formated = str_pad($course->rating->total, 3, '.0');
-            $course->rating->stars = $course->rating->total > 0 ? range(1, $course->rating->total) : null;
+            // Not rating course.
+            if ($course->rating->total == 0) {
+                $course->rating = null;
+            } else {
+                $course->rating->total = round($course->rating->total, 1);
+                $course->rating->percent = round($course->rating->total * 20);
+                $course->rating->formated = str_pad($course->rating->total, 3, '.0');
+                $course->rating->stars = $course->rating->total > 0 ? range(1, $course->rating->total) : null;
+            }
         }
 
         // If course is active or waiting.
