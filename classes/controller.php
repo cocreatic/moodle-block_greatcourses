@@ -95,12 +95,12 @@ class controller {
                         $ratingsum += $one->rating;
                     }
 
-                    $rating = $ratingsum / count($values);
                     $ratings = count($values);
+                    $rating = $ratings > 0 ? $ratingsum / $ratings : 0;
 
                     $ratingpercents = array();
                     foreach ($ratinglist as $key => $one) {
-                        $ratingpercents[$key] = round($one * 100 / count($values));
+                        $ratingpercents[$key] = $ratings > 0 ? round($one * 100 / $ratings) : 0;
                     }
                 } else {
                     $sql = "SELECT AVG(rating) AS rating, COUNT(1) AS ratings  FROM {block_rate_course} WHERE course = :courseid";
@@ -161,19 +161,25 @@ class controller {
             $contextid = $DB->get_field('context', 'id', array('contextlevel' => CONTEXT_COURSE, 'instanceid' => $course->id));
             $course->commentscount = $DB->count_records('comments', array('contextid' => $contextid, 'component' => 'block_comments'));
 
-            // Get 20 newest records.
-            $course->comments = $DB->get_records('comments', array('contextid' => $contextid, 'component' => 'block_comments'),
-                                                    'timecreated DESC', '*', 0, 20);
+            if ($course->commentscount > 0) {
+                $course->hascomments = true;
+                // Get 20 newest records.
+                $course->comments = $DB->get_records('comments', array('contextid' => $contextid, 'component' => 'block_comments'),
+                                                        'timecreated DESC', '*', 0, 20);
 
-            $course->comments = array_values($course->comments);
+                $course->comments = array_values($course->comments);
 
-            $strftimeformat = get_string('strftimerecentfull', 'langconfig');
+                $strftimeformat = get_string('strftimerecentfull', 'langconfig');
 
-            foreach ($course->comments as $comment) {
-                $user = $DB->get_record('user', array('id' => $comment->userid));
-                $userpicture = new \user_picture($user);
-                $comment->userpicture = $userpicture->get_url($PAGE);
-                $comment->timeformated = userdate($comment->timecreated, $strftimeformat);
+                foreach ($course->comments as $comment) {
+                    $user = $DB->get_record('user', array('id' => $comment->userid));
+                    $userpicture = new \user_picture($user);
+                    $comment->userpicture = $userpicture->get_url($PAGE);
+                    $comment->timeformated = userdate($comment->timecreated, $strftimeformat);
+                }
+            } else {
+                $course->hascomments = false;
+                $course->comments = null;
             }
         }
 

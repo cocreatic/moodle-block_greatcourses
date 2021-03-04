@@ -573,3 +573,36 @@
     font-size: 80%;
     font-style: italic;
 }
+
+@media (max-width: 512px) {
+    #page-blocks-greatcourses-detail .media-container > div > div {
+        width: 100%;
+    }
+
+    #page-blocks-greatcourses-detail .ranking-summary {
+        display: block;
+    }
+
+    #page-blocks-greatcourses-detail .ranking-summary > div {
+        border-bottom: 2px solid #e2e2e2;
+        border-right: none;
+        padding: 10px 0;
+    }
+
+    #page-blocks-greatcourses-detail .share-container .share-content {
+        display: block;
+    }
+
+    #page-blocks-greatcourses-detail .share-container .share-content > div {
+        margin-bottom: 10px;
+    }
+
+    #page-blocks-greatcourses-detail .course-detail .detail-foot {
+        display: block;
+    }
+
+    #page-blocks-greatcourses-detail .ranking-detail {
+        margin-bottom: 20px;
+    }
+
+}

@@ -66,8 +66,14 @@ class block_greatcourses extends block_base {
             $amount = 4;
         }
 
-        $select = 'visible = 1 AND id != ' . SITEID . ' AND startdate < ' . time() ;
         $params = array();
+        $select = 'visible = 1 AND id != ' . SITEID;
+
+        $daystoupcoming = get_config('block_greatcourses', 'daystoupcoming');
+        if (isset($daystoupcoming) && is_numeric($daystoupcoming)) {
+            $select .= ' AND startdate < :startdate ';
+            $params['startdate'] = time() + ($daystoupcoming * 24 * 60 * 60);
+        }
 
         // Categories filter.
         $categories = get_config('block_greatcourses', 'categories');

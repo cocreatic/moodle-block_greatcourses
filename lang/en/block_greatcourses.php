@@ -108,3 +108,5 @@ $string['ratingslabel'] = '{$a} ratings';
 $string['commentslabel'] = '{$a} comments';
 $string['countstars'] = '{$a} stars';
 $string['commentstitle'] = 'Comments newest';
+$string['daystoupcoming'] = 'Days to upcoming courses';
+$string['daystoupcoming_help'] = 'Number of days to consider courses like active to show in block view.';

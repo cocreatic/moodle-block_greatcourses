@@ -229,20 +229,22 @@
                 </div>
             </div>
         {{/rating}}
-        <div class="course-comments">
-            <h3>{{#str}}commentstitle, block_greatcourses{{/str}}</h3>
-            {{#comments}}
-                <div>
-                    <img src="{{userpicture}}" class="userpicture" />
+        {{#hascomments}}
+            <div class="course-comments">
+                <h3>{{#str}}commentstitle, block_greatcourses{{/str}}</h3>
+                {{#comments}}
                     <div>
-                        <div class="timeformated">{{timeformated}}</div>
-                        <p>
-                            {{content}}
-                        </p>
+                        <img src="{{userpicture}}" class="userpicture" />
+                        <div>
+                            <div class="timeformated">{{timeformated}}</div>
+                            <p>
+                                {{content}}
+                            </p>
+                        </div>
                     </div>
-                </div>
-            {{/comments}}
-        </div>
+                {{/comments}}
+            </div>
+        {{/hascomments}}
     </div>
 </div>
 {{/course}}

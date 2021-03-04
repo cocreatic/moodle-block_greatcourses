@@ -108,3 +108,5 @@ $string['ratingslabel'] = '{$a} calificaciones';
 $string['commentslabel'] = '{$a} comentarios';
 $string['countstars'] = '{$a} estrellas';
 $string['commentstitle'] = 'Comentarios más recientes';
+$string['daystoupcoming'] = 'Días para cursos próximos';
+$string['daystoupcoming_help'] = 'Número de días para considerar cursos próximos como activos para mostrar en la vista resumen del bloque.';
