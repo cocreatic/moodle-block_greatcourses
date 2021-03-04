@@ -92,7 +92,7 @@ if ($sort == 'greats') {
                 FROM {course} AS c
                 INNER JOIN {block_rate_course} AS r ON r.course = c.id
                 WHERE " . $selectgreats .
-                " GROUP BY c.id
+                " GROUP BY c.id HAVING rating > 3
                 ORDER BY rating DESC";
     $courses = $DB->get_records_sql($sql, $params, $spage * $amount, $amount);
 
