@@ -29,17 +29,32 @@
 </div>
 <div class="course-detail coursecategory-{{category}} {{#paymenturl}}type-premium{{/paymenturl}}">
     <div class="coursebanner-box">
-{{#imagepath}}
-        <img src="{{.}}" />
-{{/imagepath}}
+        {{#imagepath}}
+            <img src="{{.}}" />
+        {{/imagepath}}
 
-    <span class="coursetitle">{{{coursename}}}</span>
+        <span class="coursetitle">{{{coursename}}}</span>
 
     </div>
 
     <div class="content-detail">
 
-        <div class="ranking_detail">
+        <div class="ranking-summary">
+            {{#rating}}
+            <div>
+                <label>{{formated}}</label>
+                <div class="greatcourses-ranking-stars">
+                    <div class="greatcourses-ranking-stars-bar" style="width: {{percent}}%;"></div>
+                    {{#pix}}stars_empty, block_greatcourses{{/pix}}
+                </div>
+            </div>
+            <div>
+                <label>{{#str}}ratingslabel, block_greatcourses, {{count}} {{/str}}</label>
+            </div>
+            {{/rating}}
+            <div>
+                <label>{{#str}}commentslabel, block_greatcourses, {{commentscount}} {{/str}}</label>
+            </div>
         </div>
 
         <div class="context-detail content-layout">
@@ -80,11 +95,11 @@
                     {{#str}}sharecoursedesc, block_greatcourses{{/str}}
                 </div>
                 <div class="share-icons">
-{{#networks}}
+                {{#networks}}
                     <a href="{{url}}" target="_blank">
                         <i class="fa fa-{{icon}}"></i>
                     </a>
-{{/networks}}
+                {{/networks}}
                 </div>
 
                 <div class="input-container">
@@ -103,27 +118,27 @@
 
     <div class="media-container">
         <div class="content-layout">
-{{#custom}}
-    {{#media}}
-            <div class="media-content">
-                <video controls="controls">
-                    <source src="{{value}}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-    {{/media}}
-{{/custom}}
+            {{#custom}}
+                {{#media}}
+                <div class="media-content">
+                    <video controls="controls">
+                        <source src="{{value}}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                {{/media}}
+            {{/custom}}
             <div class="enroll-content enrollstate-{{enrollstate}}">
                 <div class="enroll-container">
                     <div>
-{{#custom}}
-    {{#enroltitle}}<p>{{enroltitle}}</p>{{/enroltitle}}
-    {{#enrolurl}}
-                    <a href="{{{enrolurl}}}" class="btn btn-primary">
-                        {{enrolurllabel}}
-                    </a>
-    {{/enrolurl}}
-{{/custom}}
+                    {{#custom}}
+                        {{#enroltitle}}<p>{{enroltitle}}</p>{{/enroltitle}}
+                        {{#enrolurl}}
+                            <a href="{{{enrolurl}}}" class="btn btn-primary">
+                                {{enrolurllabel}}
+                            </a>
+                        {{/enrolurl}}
+                    {{/custom}}
                     </div>
                 </div>
             </div>
@@ -131,70 +146,105 @@
     </div>
 
     <div class="info-container">
-{{#custom}}
-    {{#units}}
-        <div class="content-layout units-box">
-            <h3>{{title}}</h3>
-            <div class="content-box units">
-                {{{value}}}
-            </div>
-        </div>
-    {{/units}}
-{{/custom}}
+        {{#custom}}
+            {{#units}}
+                <div class="content-layout units-box">
+                    <h3>{{title}}</h3>
+                    <div class="content-box units">
+                        {{{value}}}
+                    </div>
+                </div>
+            {{/units}}
+        {{/custom}}
 
-{{#custom}}
-    {{#requirements}}
-        <div class="content-layout requirements-box">
-            <h3>{{title}}</h3>
-            <div class="content-box requirements">
-                {{{value}}}
-            </div>
-        </div>
-    {{/requirements}}
-{{/custom}}
+        {{#custom}}
+            {{#requirements}}
+                <div class="content-layout requirements-box">
+                    <h3>{{title}}</h3>
+                    <div class="content-box requirements">
+                        {{{value}}}
+                    </div>
+                </div>
+            {{/requirements}}
+        {{/custom}}
 
-{{#custom}}
-    {{#experts}}
-        <div class="content-layout experts-box">
-            <h3>{{title}}</h3>
-            <div class="content-box experts">
-                {{{value}}}
-            </div>
-        </div>
-    {{/experts}}
-{{/custom}}
+        {{#custom}}
+            {{#experts}}
+                <div class="content-layout experts-box">
+                    <h3>{{title}}</h3>
+                    <div class="content-box experts">
+                        {{{value}}}
+                    </div>
+                </div>
+            {{/experts}}
+        {{/custom}}
 
-{{#custom}}
-    {{#license}}
-        <div class="content-layout">
-            <h3>{{title}}</h3>
-            <div class="content-box license">
-                {{#path}}
-                <a rel="license" href="http://creativecommons.org/licenses/{{path}}/" target="_blank">
-                    {{{text}}}
-                    <br />
-                    <img alt="Licencia Creative Commons" src="https://licensebuttons.net/l/{{path}}/88x31.png" />
-                </a>
-                {{/path}}
-                {{^path}}
-                    {{text}}
-                {{/path}}
-            </div>
-        </div>
-    {{/license}}
-{{/custom}}
+        {{#custom}}
+            {{#license}}
+                <div class="content-layout">
+                    <h3>{{title}}</h3>
+                    <div class="content-box license">
+                        {{#path}}
+                        <a rel="license" href="http://creativecommons.org/licenses/{{path}}/" target="_blank">
+                            {{{text}}}
+                            <br />
+                            <img alt="Licencia Creative Commons" src="https://licensebuttons.net/l/{{path}}/88x31.png" />
+                        </a>
+                        {{/path}}
+                        {{^path}}
+                            {{text}}
+                        {{/path}}
+                    </div>
+                </div>
+            {{/license}}
+        {{/custom}}
     </div>
 
-{{#detailinfo}}
-    <div class="detailinfo">
-        <div class="content-layout">
-            {{{detailinfo}}}
+    {{#detailinfo}}
+        <div class="detailinfo">
+            <div class="content-layout">
+                {{{detailinfo}}}
+            </div>
         </div>
-    </div>
-{{/detailinfo}}
+    {{/detailinfo}}
 
     <div class="detail-foot">
-
+        {{#rating}}
+            <div class="ranking-detail">
+                <div>
+                    <label>{{formated}}</label>
+                    <div class="greatcourses-ranking-stars">
+                        <div class="greatcourses-ranking-stars-bar" style="width: {{percent}}%;"></div>
+                        {{#pix}}stars_empty, block_greatcourses{{/pix}}
+                    </div>
+                </div>
+                <div>
+                    {{#detail}}
+                    <div class="ranking-detail-item">
+                        <label>{{#str}} countstars, block_greatcourses, {{value}} {{/str}}</label>
+                        <div class="rating-bar"><div style="width: {{avg}}%"></div></div>
+                        <div>{{avg}}%</div>
+                    </div>
+                    {{/detail}}
+                </div>
+            </div>
+        {{/rating}}
+        {{#hascomments}}
+            <div class="course-comments">
+                <h3>{{#str}}commentstitle, block_greatcourses{{/str}}</h3>
+                {{#comments}}
+                    <div>
+                        <img src="{{userpicture}}" class="userpicture" />
+                        <div>
+                            <div class="timeformated">{{timeformated}}</div>
+                            <p>
+                                {{content}}
+                            </p>
+                        </div>
+                    </div>
+                {{/comments}}
+            </div>
+        {{/hascomments}}
     </div>
 </div>
 {{/course}}

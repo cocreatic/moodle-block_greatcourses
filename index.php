@@ -88,14 +88,20 @@ if (!empty($query)) {
 
 if ($sort == 'greats') {
     $selectgreats = str_replace(' AND id ', ' AND c.id ', $select);
-    $sql = "SELECT c.*, AVG(r.rating) AS rating
+    $sql = "SELECT c.*, AVG(r.rating) AS rating, COUNT(1) AS ratings
                 FROM {course} AS c
                 INNER JOIN {block_rate_course} AS r ON r.course = c.id
                 WHERE " . $selectgreats .
-                " GROUP BY c.id
+                " GROUP BY c.id HAVING rating > 3
                 ORDER BY rating DESC";
     $courses = $DB->get_records_sql($sql, $params, $spage * $amount, $amount);
-    $coursescount = $DB->count_records_select('course', $select, $params);
+
+    $sql_count = "SELECT COUNT(DISTINCT c.id)
+                FROM {course} AS c
+                INNER JOIN {block_rate_course} AS r ON r.course = c.id
+                WHERE " . $selectgreats;
+
+    $coursescount = $DB->count_records_sql($sql_count, $params);
 } else  if ($sort == 'premium') {
 
 

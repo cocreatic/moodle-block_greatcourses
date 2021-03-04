@@ -135,6 +135,13 @@ if ($ADMIN->fulltree) {
     $setting = new admin_setting_configtext($name, $title, $help, 20, PARAM_INT, 5);
     $settings->add($setting);
 
+    // Days to upcoming courses.
+    $name = 'block_greatcourses/daystoupcoming';
+    $title = get_string('daystoupcoming', 'block_greatcourses');
+    $help = get_string('daystoupcoming_help', 'block_greatcourses');
+    $setting = new admin_setting_configtext($name, $title, $help, 0, PARAM_INT, 3);
+    $settings->add($setting);
+
     // Social networks.
     $name = 'block_greatcourses/networks';
     $title = get_string('socialnetworks', 'block_greatcourses');

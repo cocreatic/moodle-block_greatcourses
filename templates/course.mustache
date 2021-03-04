@@ -26,7 +26,12 @@
 <div class="panel panel-default coursebox coursecategory-{{category}} state-{{#active}}active{{/active}}{{^active}}waiting{{/active}} {{#paymenturl}}type-premium{{/paymenturl}}">
     <div class="courseimage" {{#imagepath}}style="background-image: url({{imagepath}});"{{/imagepath}}></div>
     <div class="panel-heading">
-        {{#rating}}{{#pix}}i/star{{/pix}}{{/rating}}
+        {{#rating}}
+        <div class="greatcourses-ranking-stars">
+            <div class="greatcourses-ranking-stars-bar" style="width: {{percent}}%;"></div>
+            {{#pix}}stars_empty, block_greatcourses{{/pix}}
+        </div>
+        {{/rating}}
     </div>
     <div class="panel-body clearfix">
         <a class="" title="{{{shortname}}}" href="{{{baseurl}}}/blocks/greatcourses/detail.php?id={{{id}}}">
