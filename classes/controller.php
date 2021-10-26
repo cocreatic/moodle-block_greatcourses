@@ -176,6 +176,7 @@ class controller {
                     $userpicture = new \user_picture($user);
                     $comment->userpicture = $userpicture->get_url($PAGE);
                     $comment->timeformated = userdate($comment->timecreated, $strftimeformat);
+                    $comment->userfirstname = $user->firstname;
                 }
             } else {
                 $course->hascomments = false;

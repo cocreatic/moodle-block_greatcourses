@@ -103,6 +103,7 @@ class detail implements renderable, templatable {
         foreach ($datas as $data) {
             $key = $data->get_field()->get('shortname');
 
+            $exist = false;
             foreach ($fieldsnames as $field => $name) {
                 if ($name == $key) {
                     $c = new \stdClass();
@@ -123,10 +124,23 @@ class detail implements renderable, templatable {
                         $custom->$field = $c;
                     }
 
+                    $exist = true;
                     break;
                 }
             }
+
+            if (!$exist) {
+                $value = trim($data->export_value());
+
+                if (!empty($value)) {
+                    $c = new \stdClass();
+                    $c->title = $data->get_field()->get('name');
+                    $c->value = $value;
+                    $custom->$key = $c;
+                }
+            }
         }
+
         // End Load custom course fields.
         $enrolinstances = enrol_get_instances($this->course->id, true);
 
