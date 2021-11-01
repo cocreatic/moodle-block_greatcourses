@@ -519,9 +519,10 @@
 }
 
 .greatcourses-ranking-stars {
-    width: 130px;
-    height: 25px;
+    width: 160px;
+    height: 28px;
     position: relative;
+    font-size: 0;
 }
 
 .greatcourses-ranking-stars .icon {
@@ -544,8 +545,8 @@
     position: absolute;
     background: url('[[pix:block_greatcourses|stars]]') no-repeat;
     background-size: contain;
-    width: 130px;
-    height: 25px;
+    width: 160px;
+    height: 28px;
 }
 
 .coursebox .greatcourses-ranking-stars {
