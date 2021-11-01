@@ -161,6 +161,21 @@ class controller {
             $related = array();
             $relatedlimit = 3;
 
+            $categories = get_config('block_greatcourses', 'categories');
+
+            $categoriesids = array();
+            $catslist = explode(',', $categories);
+            foreach($catslist as $catid) {
+                if (is_numeric($catid)) {
+                    $categoriesids[] = (int)trim($catid);
+                }
+            }
+
+            $categoriescondition = '';
+            if (count($categoriesids) > 0) {
+                $categoriescondition = " AND c.category IN (" . implode(',', $categoriesids) . ")";
+            }
+
             if (\core_tag_tag::is_enabled('core', 'course')) {
                 // Get the course tags.
                 $tags = \core_tag_tag::get_item_tags_array('core', 'course', $course->id);
@@ -171,14 +186,20 @@ class controller {
                         $ids[] = $key;
                     }
 
-                    $instances = $DB->get_records_list('tag_instance', 'tagid', $ids, 'timemodified DESC', 'id, itemid');
+                    $sqlintances = "SELECT c.id, c.category FROM {tag_instance} AS t " .
+                                    " INNER JOIN {course} AS c ON t.itemtype = 'course' AND c.id = t.itemid" .
+                                    " WHERE t.tagid IN (" . (implode(',', $ids)) . ") " . $categoriescondition .
+                                    " ORDER BY t.timemodified DESC";
+
+                    $instances = $DB->get_records_sql($sqlintances);
 
                     foreach ($instances as $instance) {
-                        if ($instance->itemid != $course->id &&
+                        if ($instance->id != $course->id &&
+                                $instance->id != SITEID &&
                                 count($related) < $relatedlimit &&
-                                !in_array($instance->itemid, $related)) {
+                                !in_array($instance->id, $related)) {
 
-                            $related[] = $instance->itemid;
+                            $related[] = $instance->id;
                         }
                     }
                 }
@@ -187,8 +208,9 @@ class controller {
             if (count($related) < $relatedlimit) {
                 // Exclude previous related courses, current course and the site.
                 $relatedids = implode(',', array_merge($related, array($course->id, SITEID)));
-                $sql = "SELECT id FROM {course} " .
+                $sql = "SELECT id FROM {course} AS c " .
                         " WHERE visible = 1 AND (enddate > :enddate OR enddate IS NULL) AND id NOT IN ($relatedids)" .
+                        $categoriescondition .
                         " ORDER BY startdate DESC";
                 $params = array('enddate' => time());
                 $othercourses = $DB->get_records_sql($sql, $params, 0, $relatedlimit - count($related));
