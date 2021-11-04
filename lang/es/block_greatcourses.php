@@ -111,3 +111,4 @@ $string['commentstitle'] = 'Comentarios más recientes';
 $string['daystoupcoming'] = 'Días para cursos próximos';
 $string['daystoupcoming_help'] = 'Número de días para considerar cursos próximos como activos para mostrar en la vista resumen del bloque.';
 $string['relatedcourses'] = "Cursos relacionados";
+$string['courselinkcopiedtoclipboard'] = "El enlace se ha copiado al portapapeles";

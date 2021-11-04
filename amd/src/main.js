@@ -21,15 +21,47 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery', 'core/notification'], function($, Notification) {
+define(['jquery', 'core/str'], function($, str) {
 
-    var wwwroot = M.cfg.wwwroot;
+    // Load strings.
+    var strings = [];
+    strings.push({ key: 'courselinkcopiedtoclipboard', component: 'block_greatcourses' });
+
+    var s = [];
+
+    if (strings.length > 0) {
+
+        strings.forEach(one => {
+            s[one.key] = one.key;
+        });
+
+        str.get_strings(strings).then(function (results) {
+            var pos = 0;
+            strings.forEach(one => {
+                s[one.key] = results[pos];
+                pos++;
+            });
+        });
+    }
+    // End of Load strings.
 
     /**
      * Initialise all for the block.
      *
      */
     var init = function() {
+        $('input[name="courselink"]').on('click', function() {
+            var $input = $(this);
+            $input.select();
+            document.execCommand("copy");
+
+            var $msg = $('<div class="msg-courselink-copy">' + s['courselinkcopiedtoclipboard'] + '</div>');
+
+            $input.parent().append($msg);
+            window.setTimeout(function() {
+                $msg.remove();
+            }, 1600);
+        });
     };
 
     return {

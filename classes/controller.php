@@ -129,6 +129,8 @@ class controller {
 
         // Load data for course detail.
         if ($large) {
+            $fullcourse = new \core_course_list_element($course);
+
             $contextid = $DB->get_field('context', 'id', array('contextlevel' => CONTEXT_COURSE, 'instanceid' => $course->id));
             $course->commentscount = $DB->count_records('comments', array('contextid' => $contextid, 'component' => 'block_comments'));
 
@@ -251,6 +253,27 @@ class controller {
                     $course->related[] = $one;
                 }
             }
+
+            // Load the teachers information.
+            $course->hasinstructors = false;
+
+            if ($fullcourse->has_course_contacts()) {
+                $course->hasinstructors = true;
+                $course->instructors = array();
+                $instructors = $fullcourse->get_course_contacts();
+
+                foreach ($instructors as $key => $instructor) {
+
+                    $user = $DB->get_record('user', array('id' => $key));
+                    $userpicture = new \user_picture($user, array('alttext' => false, 'link' => false));
+                    $userpicture->size = 200;
+                    $user->userpicture = $userpicture->get_url($PAGE);
+                    $user->profileurl = $CFG->wwwroot . '/user/profile.php?id=' . $key;
+
+                    $course->instructors[] = $user;
+                }
+            }
+
         }
 
     }
