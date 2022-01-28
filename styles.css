@@ -9,6 +9,7 @@
 #page-blocks-greatcourses-index .coursebox,
 .block_greatcourses .coursebox {
     max-width: 200px;
+    width: 100%;
     margin: 0 10px 10px;
     overflow: hidden;
     padding: 0 0 40px;
@@ -566,6 +567,7 @@
 #page-blocks-greatcourses-detail .course-comments > div img.userpicture {
     border-radius: 50%;
     margin-right: 10px;
+    max-width: 150px;
 }
 
 #page-blocks-greatcourses-detail .course-comments > div .timeformated {

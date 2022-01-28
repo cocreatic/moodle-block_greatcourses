@@ -191,6 +191,7 @@ class controller {
                     $sqlintances = "SELECT c.id, c.category FROM {tag_instance} AS t " .
                                     " INNER JOIN {course} AS c ON t.itemtype = 'course' AND c.id = t.itemid" .
                                     " WHERE t.tagid IN (" . (implode(',', $ids)) . ") " . $categoriescondition .
+                                    " GROUP BY c.id, c.category" .
                                     " ORDER BY t.timemodified DESC";
 
                     $instances = $DB->get_records_sql($sqlintances);
