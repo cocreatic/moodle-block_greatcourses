@@ -110,3 +110,5 @@ $string['countstars'] = '{$a} stars';
 $string['commentstitle'] = 'Comments newest';
 $string['daystoupcoming'] = 'Days to upcoming courses';
 $string['daystoupcoming_help'] = 'Number of days to consider courses like active to show in block view.';
+$string['relatedcourses'] = "Related courses";
+$string['courselinkcopiedtoclipboard'] = "Course link copied to clipboard";

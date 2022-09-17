@@ -9,6 +9,7 @@
 #page-blocks-greatcourses-index .coursebox,
 .block_greatcourses .coursebox {
     max-width: 200px;
+    width: 100%;
     margin: 0 10px 10px;
     overflow: hidden;
     padding: 0 0 40px;
@@ -19,7 +20,6 @@
 .block_greatcourses .courses .courseimage {
     height: 160px;
     overflow: hidden;
-    background-size: auto 100%;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -73,7 +73,7 @@
 #page-blocks-greatcourses-index .panel-body label,
 .block_greatcourses .panel-body label {
     font-weight: bold;
-    font-size: 1.2;
+    font-size: 12px;
 }
 
 #page-blocks-greatcourses-index .panel-foot,
@@ -268,7 +268,7 @@
 
 #page-blocks-greatcourses-detail .share-container {
     justify-items: center;
-    align-items:center;
+    align-items: center;
     border-bottom: 2px solid #e5e5e5;
     padding: 20px 0;
 }
@@ -372,7 +372,6 @@
     background-color: #aaa;
     border-radius: 50%;
     color: #fff;
-    width: 100%;
     position: relative;
     width: 250px;
     height: 250px;
@@ -446,7 +445,7 @@
 }
 
 #page-blocks-greatcourses-detail .ranking-summary {
-        display: flex;
+    display: flex;
 }
 
 #page-blocks-greatcourses-detail .ranking-summary > div {
@@ -519,9 +518,10 @@
 }
 
 .greatcourses-ranking-stars {
-    width: 130px;
-    height: 25px;
+    width: 160px;
+    height: 28px;
     position: relative;
+    font-size: 0;
 }
 
 .greatcourses-ranking-stars .icon {
@@ -544,8 +544,8 @@
     position: absolute;
     background: url('[[pix:block_greatcourses|stars]]') no-repeat;
     background-size: contain;
-    width: 130px;
-    height: 25px;
+    width: 160px;
+    height: 28px;
 }
 
 .coursebox .greatcourses-ranking-stars {
@@ -567,11 +567,22 @@
 #page-blocks-greatcourses-detail .course-comments > div img.userpicture {
     border-radius: 50%;
     margin-right: 10px;
+    max-width: 150px;
 }
 
 #page-blocks-greatcourses-detail .course-comments > div .timeformated {
     font-size: 80%;
     font-style: italic;
+}
+
+#page-blocks-greatcourses-detail .msg-courselink-copy {
+    position: absolute;
+    background-color: #fff;
+    opacity: 0.9;
+    padding: 5px;
+    border: 1px dashed;
+    font-size: 70%;
+    left: 0;
 }
 
 @media (max-width: 512px) {

@@ -46,40 +46,11 @@ class controller {
                                         array('fieldid' => $payfieldid, 'instanceid' => $course->id));
         }
 
-        $coursefull = new \core_course_list_element($course);
+        $course->imagepath = self::get_courseimage($course);
 
-        $courseimage = '';
-        foreach ($coursefull->get_course_overviewfiles() as $file) {
-            $isimage = $file->is_valid_image();
-            $url = file_encode_url("$CFG->wwwroot/pluginfile.php",
-                    '/'. $file->get_contextid(). '/'. $file->get_component(). '/'.
-                    $file->get_filearea(). $file->get_filepath(). $file->get_filename(), !$isimage);
-            if ($isimage) {
-                $courseimage = $url;
-                break;
-            }
-        }
-
-        if (empty($courseimage)) {
-            $type = get_config('block_greatcourses', 'coverimagetype');
-
-            switch ($type) {
-                case 'generated':
-                    $courseimage = $OUTPUT->get_generated_image_for_id($course->id);
-                break;
-                case 'none':
-                    $courseimage = '';
-                break;
-                default:
-                    $courseimage = new \moodle_url($CFG->wwwroot . '/blocks/greatcourses/pix/' .
-                                                                ($large ? 'course' : 'course_small') . '.png');
-            }
-        }
-
-        $course->imagepath = $courseimage;
+        $bmanager = new \block_manager($PAGE);
 
         if (!property_exists($course, 'rating')) {
-            $bmanager = new \block_manager($PAGE);
             if ($bmanager->is_known_block_type('rate_course')) {
 
                 if ($large) {
@@ -158,6 +129,8 @@ class controller {
 
         // Load data for course detail.
         if ($large) {
+            $fullcourse = new \core_course_list_element($course);
+
             $contextid = $DB->get_field('context', 'id', array('contextlevel' => CONTEXT_COURSE, 'instanceid' => $course->id));
             $course->commentscount = $DB->count_records('comments', array('contextid' => $contextid, 'component' => 'block_comments'));
 
@@ -173,7 +146,8 @@ class controller {
 
                 foreach ($course->comments as $comment) {
                     $user = $DB->get_record('user', array('id' => $comment->userid));
-                    $userpicture = new \user_picture($user);
+                    $userpicture = new \user_picture($user, array('alttext'=>false, 'link'=>false));
+                    $userpicture->size = 200;
                     $comment->userpicture = $userpicture->get_url($PAGE);
                     $comment->timeformated = userdate($comment->timecreated, $strftimeformat);
                     $comment->userfirstname = $user->firstname;
@@ -182,6 +156,125 @@ class controller {
                 $course->hascomments = false;
                 $course->comments = null;
             }
+
+            // Search related courses by tags.
+            $course->hasrelated = false;
+            $course->related = array();
+            $related = array();
+            $relatedlimit = 3;
+
+            $categories = get_config('block_greatcourses', 'categories');
+
+            $categoriesids = array();
+            $catslist = explode(',', $categories);
+            foreach($catslist as $catid) {
+                if (is_numeric($catid)) {
+                    $categoriesids[] = (int)trim($catid);
+                }
+            }
+
+            $categoriescondition = '';
+            if (count($categoriesids) > 0) {
+                $categoriescondition = " AND c.category IN (" . implode(',', $categoriesids) . ")";
+            }
+
+            if (\core_tag_tag::is_enabled('core', 'course')) {
+                // Get the course tags.
+                $tags = \core_tag_tag::get_item_tags_array('core', 'course', $course->id);
+
+                if (count($tags) > 0) {
+                    $ids = array();
+                    foreach ($tags as $key => $tag) {
+                        $ids[] = $key;
+                    }
+
+                    $sqlintances = "SELECT c.id, c.category FROM {tag_instance} AS t " .
+                                    " INNER JOIN {course} AS c ON t.itemtype = 'course' AND c.id = t.itemid" .
+                                    " WHERE t.tagid IN (" . (implode(',', $ids)) . ") " . $categoriescondition .
+                                    " GROUP BY c.id, c.category" .
+                                    " ORDER BY t.timemodified DESC";
+
+                    $instances = $DB->get_records_sql($sqlintances);
+
+                    foreach ($instances as $instance) {
+                        if ($instance->id != $course->id &&
+                                $instance->id != SITEID &&
+                                count($related) < $relatedlimit &&
+                                !in_array($instance->id, $related)) {
+
+                            $related[] = $instance->id;
+                        }
+                    }
+                }
+            }
+
+            if (count($related) < $relatedlimit) {
+                // Exclude previous related courses, current course and the site.
+                $relatedids = implode(',', array_merge($related, array($course->id, SITEID)));
+                $sql = "SELECT id FROM {course} AS c " .
+                        " WHERE visible = 1 AND (enddate > :enddate OR enddate IS NULL) AND id NOT IN ($relatedids)" .
+                        $categoriescondition .
+                        " ORDER BY startdate DESC";
+                $params = array('enddate' => time());
+                $othercourses = $DB->get_records_sql($sql, $params, 0, $relatedlimit - count($related));
+
+                foreach ($othercourses as $other) {
+                    $related[] = $other->id;
+                }
+            }
+
+            if (count($related) > 0) {
+                $course->hasrelated = true;
+
+                $coursesinfo = $DB->get_records_list('course', 'id', $related);
+
+                // Load other info about the courses.
+                foreach ($coursesinfo as $one) {
+
+                    $one->imagepath = self::get_courseimage($one);
+
+                    if ($bmanager->is_known_block_type('rate_course')) {
+                        $sql = "SELECT AVG(rating) AS rating, COUNT(1) AS ratings  FROM {block_rate_course} WHERE course = :cid";
+                        $rate = $DB->get_record_sql($sql, array('cid' => $one->id));
+
+                        $one->rating = new \stdClass();
+                        $one->rating->total = 0;
+                        $one->rating->count = 0;
+                        $one->rating->detail = null;
+
+                        if ($rate) {
+                            $one->rating->total = round($rate->rating, 1);
+                            $one->rating->count = $rate->ratings;
+                            $one->rating->percent = round($one->rating->total * 20);
+                            $one->rating->formated = str_pad($one->rating->total, 3, '.0');
+                            $one->rating->stars = $one->rating->total > 0 ? range(1, $one->rating->total) : null;
+                        }
+                    }
+
+                    $course->related[] = $one;
+                }
+            }
+
+            // Load the teachers information.
+            $course->hasinstructors = false;
+
+            if ($fullcourse->has_course_contacts()) {
+                $course->hasinstructors = true;
+                $course->instructors = array();
+                $instructors = $fullcourse->get_course_contacts();
+
+                foreach ($instructors as $key => $instructor) {
+
+                    $user = $DB->get_record('user', array('id' => $key));
+                    $userpicture = new \user_picture($user, array('alttext' => false, 'link' => false));
+                    $userpicture->size = 200;
+                    $user->userpicture = $userpicture->get_url($PAGE);
+                    $user->profileurl = $CFG->wwwroot . '/user/profile.php?id=' . $key;
+
+                    $course->instructors[] = $user;
+                }
+            }
+
         }
 
     }
@@ -224,5 +317,41 @@ class controller {
         }
 
         return false;
+    }
+
+    public static function get_courseimage($course) {
+        global $CFG, $OUTPUT;
+
+        $coursefull = new \core_course_list_element($course);
+
+        $courseimage = '';
+        foreach ($coursefull->get_course_overviewfiles() as $file) {
+            $isimage = $file->is_valid_image();
+            $url = file_encode_url("$CFG->wwwroot/pluginfile.php",
+                    '/'. $file->get_contextid(). '/'. $file->get_component(). '/'.
+                    $file->get_filearea(). $file->get_filepath(). $file->get_filename(), !$isimage);
+            if ($isimage) {
+                $courseimage = $url;
+                break;
+            }
+        }
+
+        if (empty($courseimage)) {
+            $type = get_config('block_greatcourses', 'coverimagetype');
+
+            switch ($type) {
+                case 'generated':
+                    $courseimage = $OUTPUT->get_generated_image_for_id($course->id);
+                break;
+                case 'none':
+                    $courseimage = '';
+                break;
+                default:
+                    $courseimage = new \moodle_url($CFG->wwwroot . '/blocks/greatcourses/pix/' .
+                                                                ($large ? 'course' : 'course_small') . '.png');
+            }
+        }
+
+        return $courseimage;
     }
 }

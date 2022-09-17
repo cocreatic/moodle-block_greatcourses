@@ -214,7 +214,7 @@ class detail implements renderable, templatable {
 
         }
 
-
+        $PAGE->requires->js_call_amd('block_greatcourses/main', 'init');
 
         // End Check enroled status.
 
