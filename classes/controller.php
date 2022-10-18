@@ -36,14 +36,55 @@ class controller {
     protected static $PAYFIELDID = null;
 
     public static function course_preprocess($course, $large = false) {
-        global $CFG, $OUTPUT, $DB, $PAGE;
+        global $CFG, $OUTPUT, $DB, $PAGE, $USER;
 
+        $course->haspaymentgw = false;
         $course->paymenturl = null;
         $payfieldid = self::get_payfieldid();
 
         if ($payfieldid) {
             $course->paymenturl = $DB->get_field('customfield_data', 'value',
                                         array('fieldid' => $payfieldid, 'instanceid' => $course->id));
+        }
+
+        // Load course context to general purpose.
+        $coursecontext = \context_course::instance($course->id, $USER, '', true);
+
+        // Load the course enrol info.
+        $enrolinstances = enrol_get_instances($course->id, true);
+
+        $course->enrollable = false;
+        $course->fee = array();
+        foreach ($enrolinstances as $instance) {
+            if ($instance->enrol == 'self') {
+                $course->enrollable = true;
+                break;
+            } else if ($instance->enrol == 'fee' && enrol_is_enabled('fee')) {
+
+                $cost = (float) $instance->cost;
+                if ( $cost <= 0 ) {
+                    $cost = (float) get_config('enrol_fee', 'cost');
+                }
+
+                if ($cost > 0) {
+                    $datafee = new \stdClass();
+                    $datafee->cost = \core_payment\helper::get_cost_as_string($cost, $instance->currency);
+                    $datafee->itemid = $instance->id;
+                    $datafee->label = !empty($instance->name) ? $instance->name : get_string('sendpaymentbutton', 'enrol_fee');
+                    $datafee->description = get_string('purchasedescription', 'enrol_fee',
+                                                format_string($course->fullname, true, ['context' => $coursecontext]));
+
+                    $course->fee[] = $datafee;
+                    $course->enrollable = true;
+                    $course->haspaymentgw = true;
+                }
+
+            }
+        }
+
+        // If course has a single cost, load it for fast printing.
+        if (count($course->fee) == 1) {
+            $course->cost = $course->fee[0]->cost;
         }
 
         $course->imagepath = self::get_courseimage($course);
@@ -131,13 +172,12 @@ class controller {
         if ($large) {
             $fullcourse = new \core_course_list_element($course);
 
-            $contextid = $DB->get_field('context', 'id', array('contextlevel' => CONTEXT_COURSE, 'instanceid' => $course->id));
-            $course->commentscount = $DB->count_records('comments', array('contextid' => $contextid, 'component' => 'block_comments'));
+            $course->commentscount = $DB->count_records('comments', array('contextid' => $coursecontext->id, 'component' => 'block_comments'));
 
             if ($course->commentscount > 0) {
                 $course->hascomments = true;
                 // Get 20 newest records.
-                $course->comments = $DB->get_records('comments', array('contextid' => $contextid, 'component' => 'block_comments'),
+                $course->comments = $DB->get_records('comments', array('contextid' => $coursecontext->id, 'component' => 'block_comments'),
                                                         'timecreated DESC', '*', 0, 20);
 
                 $course->comments = array_values($course->comments);

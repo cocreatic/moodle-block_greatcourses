@@ -142,15 +142,11 @@ class detail implements renderable, templatable {
         }
 
         // End Load custom course fields.
-        $enrolinstances = enrol_get_instances($this->course->id, true);
 
-        $custom->enrollable = false;
-        foreach ($enrolinstances as $instance) {
-            if ($instance->enrol == 'self') {
-                $custom->enrollable = true;
-                break;
-            }
-        }
+        // Load the course context.
+        $coursecontext = \context_course::instance($this->course->id, $USER, '', true);
+
+        $enrolinstances = enrol_get_instances($this->course->id, true);
 
         $completed = $DB->get_record('course_completions', array('userid' => $USER->id, 'course' => $this->course->id));
 
@@ -173,7 +169,6 @@ class detail implements renderable, templatable {
 
 
         // Check enroled status.
-        $coursecontext = \context_course::instance($this->course->id, $USER, '', true);
         $custom->enrolled = !(isguestuser() || !isloggedin() || !is_enrolled($coursecontext));
 
         $custom->completed = $completed && $completed->timecompleted;
@@ -196,7 +191,7 @@ class detail implements renderable, templatable {
             $custom->enrolurl = new \moodle_url('/course/view.php', array('id' => $this->course->id));
             $custom->enrolurllabel = get_string('gotocourse', 'block_greatcourses');
 
-        } else if ($custom->enrollable) {
+        } else if ($this->course->enrollable) {
 
             $ispremium = \block_greatcourses\controller::is_user_premium();
             if ($this->course->paymenturl && !$ispremium) {
@@ -205,6 +200,8 @@ class detail implements renderable, templatable {
                 $custom->enrolurl = $this->course->paymenturl;
                 $custom->enrolurllabel = get_string('paymentbutton', 'block_greatcourses');
 
+            } else if ($this->course->haspaymentgw) {
+                $custom->enroltitle = get_string('paymentrequired', 'block_greatcourses');;
             } else {
 
                 $custom->enroltitle = get_string('enrollrequired', 'block_greatcourses');

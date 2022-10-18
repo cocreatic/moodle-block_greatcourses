@@ -377,6 +377,14 @@
     height: 250px;
 }
 
+#page-blocks-greatcourses-detail .course-detail .enroll-container .haspaymentgw p {
+    line-height: 100%;
+}
+
+#page-blocks-greatcourses-detail .course-detail .enroll-container .haspaymentgw [data-component="enrol_fee"] {
+    margin-bottom: 10px;
+}
+
 #page-blocks-greatcourses-detail .course-detail .enrollstate-completed .enroll-container {
     background-color: #86d7d1;
     color: #016e84;

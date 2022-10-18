@@ -130,7 +130,7 @@
             {{/custom}}
             <div class="enroll-content enrollstate-{{enrollstate}}">
                 <div class="enroll-container">
-                    <div>
+                    <div class="{{#haspaymentgw}}haspaymentgw{{/haspaymentgw}}">
                     {{#custom}}
                         {{#enroltitle}}<p>{{enroltitle}}</p>{{/enroltitle}}
                         {{#enrolurl}}
@@ -138,6 +138,20 @@
                                 {{enrolurllabel}}
                             </a>
                         {{/enrolurl}}
+                        {{#haspaymentgw}}
+                            {{#fee}}
+                            <a class="btn btn-primary"
+                                data-action="core_payment/triggerPayment"
+                                data-component="enrol_fee"
+                                data-paymentarea="fee"
+                                data-itemid="{{itemid}}"
+                                data-cost="{{cost}}"
+                                data-description={{#quote}}{{description}}{{/quote}}>
+                                {{label}}
+                            </a>
+                            {{/fee}}
+                        {{/haspaymentgw}}
+
                     {{/custom}}
                     </div>
                 </div>
@@ -247,4 +261,12 @@
         {{/hascomments}}
     </div>
 </div>
+{{#haspaymentgw}}
+{{#js}}
+    require(['core_payment/gateways_modal'], function(modal) {
+        modal.init();
+    });
+{{/js}}
+{{/haspaymentgw}}
+
 {{/course}}
