@@ -59,7 +59,7 @@ class detail implements renderable, templatable {
      * @return array Context variables for the template
      */
     public function export_for_template(renderer_base $output) {
-        global $CFG, $OUTPUT, $PAGE, $USER, $DB, $SESSION;
+        global $CFG, $OUTPUT, $PAGE, $USER, $DB;
 
         // Course detail info.
         $detailinfo = get_config('block_greatcourses', 'detailinfo');
