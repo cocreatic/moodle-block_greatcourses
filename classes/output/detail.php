@@ -142,15 +142,9 @@ class detail implements renderable, templatable {
         }
 
         // End Load custom course fields.
-        $enrolinstances = enrol_get_instances($this->course->id, true);
 
-        $custom->enrollable = false;
-        foreach ($enrolinstances as $instance) {
-            if ($instance->enrol == 'self') {
-                $custom->enrollable = true;
-                break;
-            }
-        }
+        // Load the course context.
+        $coursecontext = \context_course::instance($this->course->id, $USER, '', true);
 
         $completed = $DB->get_record('course_completions', array('userid' => $USER->id, 'course' => $this->course->id));
 
@@ -171,45 +165,72 @@ class detail implements renderable, templatable {
         $coursename = $first . '<span>' . $last . '</span>';
         // End
 
-
-        // Check enroled status.
-        $coursecontext = \context_course::instance($this->course->id, $USER, '', true);
+        // Check enrolled status.
         $custom->enrolled = !(isguestuser() || !isloggedin() || !is_enrolled($coursecontext));
 
         $custom->completed = $completed && $completed->timecompleted;
 
         $enrollstate = $custom->completed ? 'completed' : ($custom->enrolled ? 'enrolled' : 'none');
 
-        $custom->enroltitle = get_string('notenrollable', 'block_greatcourses');
-        $custom->enrolurl = null;
-        $custom->enrolurllabel = '';
+        $custom->enrolltitle = get_string('notenrollable', 'block_greatcourses');
+        $custom->enrollurl = null;
+        $custom->enrollurllabel = '';
 
         if ($custom->completed) {
 
-            $custom->enroltitle = get_string('completed', 'block_greatcourses');
-            $custom->enrolurl = new \moodle_url('/course/view.php', array('id' => $this->course->id));
-            $custom->enrolurllabel = get_string('gotocourse', 'block_greatcourses');
+            $custom->enrolltitle = get_string('completed', 'block_greatcourses');
+            $custom->enrollurl = new \moodle_url('/course/view.php', array('id' => $this->course->id));
+            $custom->enrollurllabel = get_string('gotocourse', 'block_greatcourses');
+
+            // If the user complete the course, disable the payment gateway.
+            $this->course->haspaymentgw = false;
 
         } else if ($custom->enrolled) {
 
-            $custom->enroltitle = get_string('enrolled', 'block_greatcourses');
-            $custom->enrolurl = new \moodle_url('/course/view.php', array('id' => $this->course->id));
-            $custom->enrolurllabel = get_string('gotocourse', 'block_greatcourses');
+            $custom->enrolltitle = get_string('enrolled', 'block_greatcourses');
+            $custom->enrollurl = new \moodle_url('/course/view.php', array('id' => $this->course->id));
+            $custom->enrollurllabel = get_string('gotocourse', 'block_greatcourses');
 
-        } else if ($custom->enrollable) {
+            // If the user is enrolled, disable the payment gateway.
+            $this->course->haspaymentgw = false;
+
+        } else if (has_capability('moodle/course:view', $coursecontext)) {
+
+            $custom->enrolltitle = get_string('hascourseview', 'block_greatcourses');
+            $custom->enrollurl = new \moodle_url('/course/view.php', array('id' => $this->course->id));
+            $custom->enrollurllabel = get_string('gotocourse', 'block_greatcourses');
+
+            // If the user is enrolled, disable the payment gateway.
+            $this->course->haspaymentgw = false;
+
+        } else if ($this->course->enrollable) {
 
             $ispremium = \block_greatcourses\controller::is_user_premium();
             if ($this->course->paymenturl && !$ispremium) {
 
-                $custom->enroltitle = get_string('paymentrequired', 'block_greatcourses');
-                $custom->enrolurl = $this->course->paymenturl;
-                $custom->enrolurllabel = get_string('paymentbutton', 'block_greatcourses');
+                $custom->enrolltitle = get_string('paymentrequired', 'block_greatcourses');
+                $custom->enrollurl = $this->course->paymenturl;
+                $custom->enrollurllabel = get_string('paymentbutton', 'block_greatcourses');
+
+            } else if ($this->course->haspaymentgw) {
+                $custom->enrolltitle = get_string('paymentrequired', 'block_greatcourses');
+                $custom->requireauth = isguestuser() || !isloggedin();
+
+                if ($custom->requireauth) {
+                    $url = new \moodle_url('/blocks/greatcourses/detail.php', array('id' => $this->course->id, 'tologin' => true));
+                    $custom->requireauthurl = $url;
+                }
+
+            } else if ($this->course->enrollasguest) {
+                $custom->enrolltitle = get_string('allowguests', 'enrol_guest');
+                $custom->enrollurl = new \moodle_url('/course/view.php', array('id' => $this->course->id));
+                $custom->enrollurllabel = get_string('gotocourse', 'block_greatcourses');
 
             } else {
 
-                $custom->enroltitle = get_string('enrollrequired', 'block_greatcourses');
-                $custom->enrolurl = new \moodle_url('/blocks/greatcourses/detail.php', array('id' => $this->course->id, 'enroll' => 1));
-                $custom->enrolurllabel = get_string('enroll', 'block_greatcourses');
+                $custom->enrolltitle = get_string('enrollrequired', 'block_greatcourses');
+                $custom->enrollurl = new \moodle_url('/blocks/greatcourses/detail.php', array('id' => $this->course->id, 'enroll' => 1));
+                $custom->enrollurllabel = get_string('enroll', 'block_greatcourses');
             }
 
         }

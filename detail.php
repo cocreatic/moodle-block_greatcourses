@@ -19,10 +19,11 @@ require_once('classes/output/detail.php');
 
 $id = optional_param('id', 0, PARAM_INT);
 $enroll = optional_param('enroll', false, PARAM_BOOL);
+$tologin = optional_param('tologin', false, PARAM_BOOL);
 
 if ($id == SITEID) {
     // This course is not a real course.
-    redirect($CFG->wwwroot .'/');
+    redirect($CFG->wwwroot . '/');
 }
 
 $course = $DB->get_record('course', array('id' => $id), '*', MUST_EXIST);
@@ -34,7 +35,6 @@ $PAGE->set_url('/blocks/greatcourses/detail.php', array('id' => $course->id));
 $PAGE->set_pagelayout('incourse');
 $PAGE->set_heading($course->fullname);
 $PAGE->set_title(get_string('coursedetail', 'block_greatcourses'));
-
 
 if ($enroll) {
 
@@ -71,6 +71,11 @@ if ($enroll) {
                 break;
             }
         }
+    }
+} else if ($tologin) {
+    if (isguestuser() || !isloggedin()) {
+        $SESSION->wantsurl = new moodle_url('/blocks/greatcourses/detail.php', array('id' => $course->id));
+        redirect(get_login_url());
     }
 }
 

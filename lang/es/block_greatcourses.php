@@ -112,3 +112,5 @@ $string['daystoupcoming'] = 'Días para cursos próximos';
 $string['daystoupcoming_help'] = 'Número de días para considerar cursos próximos como activos para mostrar en la vista resumen del bloque.';
 $string['relatedcourses'] = "Cursos relacionados";
 $string['courselinkcopiedtoclipboard'] = "El enlace se ha copiado al portapapeles";
+$string['requireauth'] = 'Debe <a href="{$a}">acceder</a> primero para poder matricular este curso';
+$string['hascourseview'] = '¡Tienes acceso a este curso con tu usuario actual!';

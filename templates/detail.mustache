@@ -130,14 +130,33 @@
             {{/custom}}
             <div class="enroll-content enrollstate-{{enrollstate}}">
                 <div class="enroll-container">
-                    <div>
+                    <div class="{{#haspaymentgw}}haspaymentgw{{/haspaymentgw}}">
                     {{#custom}}
-                        {{#enroltitle}}<p>{{enroltitle}}</p>{{/enroltitle}}
-                        {{#enrolurl}}
-                            <a href="{{{enrolurl}}}" class="btn btn-primary">
-                                {{enrolurllabel}}
+                        {{#enrolltitle}}<p>{{enrolltitle}}</p>{{/enrolltitle}}
+                        {{#enrollurl}}
+                            <a href="{{{enrollurl}}}" class="btn btn-primary">
+                                {{enrollurllabel}}
                             </a>
-                        {{/enrolurl}}
+                        {{/enrollurl}}
+                        {{#haspaymentgw}}
+                            {{#requireauth}}
+                                <div class="requireauth">{{#str}} requireauth, block_greatcourses, {{{requireauthurl}}} {{/str}}</div>
+                            {{/requireauth}}
+                            {{^requireauth}}
+                                {{#fee}}
+                                <a class="btn btn-primary"
+                                    data-action="core_payment/triggerPayment"
+                                    data-component="enrol_fee"
+                                    data-paymentarea="fee"
+                                    data-itemid="{{itemid}}"
+                                    data-cost="{{cost}}"
+                                    data-description={{#quote}}{{description}}{{/quote}}>
+                                    {{label}}
+                                </a>
+                                {{/fee}}
+                            {{/requireauth}}
+                        {{/haspaymentgw}}
+
                     {{/custom}}
                     </div>
                 </div>
@@ -247,4 +266,12 @@
         {{/hascomments}}
     </div>
 </div>
+{{#haspaymentgw}}
+{{#js}}
+    require(['core_payment/gateways_modal'], function(modal) {
+        modal.init();
+    });
+{{/js}}
+{{/haspaymentgw}}
+
 {{/course}}
