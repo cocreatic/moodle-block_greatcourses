@@ -79,6 +79,11 @@ class controller {
                     $course->haspaymentgw = true;
                 }
 
+            } else if ($instance->enrol == 'guest' && enrol_is_enabled('guest')) {
+
+                $course->enrollable = true;
+                $course->enrollasguest = true;
+
             }
         }
 
