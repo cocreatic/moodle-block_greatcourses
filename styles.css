@@ -600,6 +600,42 @@
     left: 0;
 }
 
+.relatedcourses h3 {
+    text-align: center;
+}
+
+.relatedcourses > div {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 30px;
+}
+
+.relatedcourses > div .onerelated {
+    width: calc(33% - 40px);
+}
+
+.relatedcourses > div .onerelated a,
+.relatedcourses > div .onerelated a:not(.btn) {
+    color: #151C2F;
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: underline;
+}
+
+.relatedcourses > div .onerelated .courseimage {
+    width: 100%;
+    padding-top: 40%;
+    border-radius: 5px;
+    background-size: cover;
+    background-position: center center;
+    margin-bottom: 30px;
+}
+
+.relatedcourses > div .onerelated .greatcourses-ranking-stars {
+    float: right;
+    margin-top: 35px;
+}
+
 @media (max-width: 512px) {
     #page-blocks-greatcourses-detail .media-container > div > div {
         width: 100%;

@@ -121,10 +121,15 @@
             {{#custom}}
                 {{#media}}
                 <div class="media-content">
-                    <video controls="controls">
-                        <source src="{{value}}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                    {{#isembed}}
+                        <iframe src="{{value}}" frameborder="0" allowfullscreen allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                    {{/isembed}}
+                    {{^isembed}}
+                        <video controls="controls">
+                            <source src="{{value}}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    {{/isembed}}
                 </div>
                 {{/media}}
             {{/custom}}
@@ -226,6 +231,28 @@
             </div>
         </div>
     {{/detailinfo}}
+
+    {{#hasrelated}}
+        <div class="relatedcourses">
+            <h3>{{#str}}relatedcourses, block_greatcourses{{/str}}</h3>
+            <div>
+                {{#related}}
+                    <div class="onerelated">
+                        <div class="courseimage" style="background-image: url({{imagepath}})"></div>
+                        <a href="{{baseurl}}/blocks/greatcourses/detail.php?id={{id}}">{{fullname}}</a>
+
+                        {{#rating}}
+                        <div class="greatcourses-ranking-stars">
+                            <div class="greatcourses-ranking-stars-bar" style="width: {{percent}}%;"></div>
+                            {{#pix}}stars_empty, block_greatcourses{{/pix}}
+                        </div>
+                        {{/rating}}
+
+                    </div>
+                {{/related}}
+            </div>
+        </div>
+    {{/hasrelated}}
 
     <div class="detail-foot">
         {{#rating}}

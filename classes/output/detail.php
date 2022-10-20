@@ -118,6 +118,12 @@ class detail implements renderable, templatable {
                         } else {
                             $c->text = $c->value;
                         }
+                    } else if ($field == 'media') {
+                        if (strpos($c->value, 'https://www.youtube.com') === 0 ||
+                               strpos($c->value, 'https://youtube.com') === 0 ||
+                               strpos($c->value, 'https://player.vimeo.com') === 0) {
+                            $c->isembed = true;
+                        }
                     }
 
                     if (!empty($c->value)) {
