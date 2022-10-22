@@ -104,6 +104,8 @@ class block_greatcourses extends block_base {
 
         $this->content->text = $html;
 
+        \block_greatcourses\controller::include_templatecss();
+
         return $this->content;
     }
 

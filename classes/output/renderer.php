@@ -42,7 +42,39 @@ class renderer extends plugin_renderer_base {
      * @return string HTML string
      */
     public function render_main(main $main) {
-        return $this->render_from_template('block_greatcourses/main', $main->export_for_template($this));
+        global $CFG;
+
+        $template = get_config('block_greatcourses', 'templatetype');
+        $path = $CFG->dirroot . '/blocks/greatcourses/templates/' . $template . '/main.mustache';
+
+        if ($template != 'default' && file_exists($path)) {
+            $templatefile = 'block_greatcourses/' . $template . '/main';
+        } else {
+            $templatefile = 'block_greatcourses/main';
+        }
+
+        return $this->render_from_template($templatefile, $main->export_for_template($this));
+    }
+
+    /**
+     * Return the template content for the block.
+     *
+     * @param catalog $catalog The catalog renderable
+     * @return string HTML string
+     */
+    public function render_catalog(catalog $catalog) {
+        global $CFG;
+
+        $template = get_config('block_greatcourses', 'templatetype');
+        $path = $CFG->dirroot . '/blocks/greatcourses/templates/' . $template . '/catalog.mustache';
+
+        if ($template != 'default' && file_exists($path)) {
+            $templatefile = 'block_greatcourses/' . $template . '/catalog';
+        } else {
+            $templatefile = 'block_greatcourses/catalog';
+        }
+
+        return $this->render_from_template($templatefile, $catalog->export_for_template($this));
     }
 
     /**
@@ -52,6 +84,17 @@ class renderer extends plugin_renderer_base {
      * @return string HTML string
      */
     public function render_detail(detail $detail) {
-        return $this->render_from_template('block_greatcourses/detail', $detail->export_for_template($this));
+        global $CFG;
+
+        $template = get_config('block_greatcourses', 'templatetype');
+        $path = $CFG->dirroot . '/blocks/greatcourses/templates/' . $template . '/detail.mustache';
+
+        if ($template != 'default' && file_exists($path)) {
+            $templatefile = 'block_greatcourses/' . $template . '/detail';
+        } else {
+            $templatefile = 'block_greatcourses/detail';
+        }
+
+        return $this->render_from_template($templatefile, $detail->export_for_template($this));
     }
 }

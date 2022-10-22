@@ -114,3 +114,5 @@ $string['relatedcourses'] = "Cursos relacionados";
 $string['courselinkcopiedtoclipboard'] = "El enlace se ha copiado al portapapeles";
 $string['requireauth'] = 'Debe <a href="{$a}">acceder</a> primero para poder matricular este curso';
 $string['hascourseview'] = '¡Tienes acceso a este curso con tu usuario actual!';
+$string['templatetype'] = 'Tipo de plantilla';
+$string['templatetype_help'] = 'Elija una plantilla para ajustar la apariencia de las páginas del bloque';

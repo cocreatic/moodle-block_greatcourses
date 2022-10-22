@@ -29,12 +29,13 @@ $PAGE->set_pagelayout('incourse');
 $PAGE->set_heading(get_string('amountcourses', 'block_greatcourses'));
 $PAGE->set_title(get_string('coursedetail', 'block_greatcourses'));
 
+\block_greatcourses\controller::include_templatecss();
 
 echo $OUTPUT->header();
 
 $summary = get_config('block_greatcourses', 'summary');
 
-echo format_text($summary, FORMAT_MOODLE);
+echo format_text($summary, FORMAT_HTML, array('trusted' => true, 'noclean' => true));
 
 $amount = get_config('block_greatcourses', 'amount');
 

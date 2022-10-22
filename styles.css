@@ -1,4 +1,4 @@
-#page-blocks-greatcourses-index .courses,
+.path-blocks-greatcourses .courses,
 .block_greatcourses .courses {
     display: flex;
     flex-wrap: wrap;
@@ -6,7 +6,7 @@
     padding-top: 20px;
 }
 
-#page-blocks-greatcourses-index .coursebox,
+.path-blocks-greatcourses .coursebox,
 .block_greatcourses .coursebox {
     max-width: 200px;
     width: 100%;
@@ -16,7 +16,7 @@
     position: relative;
 }
 
-#page-blocks-greatcourses-index .courseimage,
+.path-blocks-greatcourses .coursebox .courseimage,
 .block_greatcourses .courses .courseimage {
     height: 160px;
     overflow: hidden;
@@ -25,12 +25,12 @@
     background-size: cover;
 }
 
-#page-blocks-greatcourses-index .courses .coursebox.state-waiting,
+.path-blocks-greatcourses .coursebox.state-waiting,
 .block_greatcourses .courses .coursebox.state-waiting {
     filter: grayscale(1);
 }
 
-#page-blocks-greatcourses-index .waiting-label,
+.path-blocks-greatcourses .coursebox .waiting-label,
 .block_greatcourses .waiting-label {
     position: absolute;
     background-color: #595959;
@@ -42,7 +42,7 @@
     top: 20%;
 }
 
-#page-blocks-greatcourses-index .coursebox.type-premium:after,
+.path-blocks-greatcourses .coursebox.type-premium:after,
 .block_greatcourses .coursebox.type-premium:after {
     content: "";
     position: absolute;
@@ -53,30 +53,30 @@
     height: 60px;
 }
 
-#page-blocks-greatcourses-index .courses .coursebox.type-premium .panel-heading,
+.path-blocks-greatcourses .coursebox.type-premium .panel-heading,
 .block_greatcourses .courses .coursebox.type-premium .panel-heading {
     padding-right: 60px;
 }
 
-#page-blocks-greatcourses-index .panel-body,
+.path-blocks-greatcourses .coursebox .panel-body,
 .block_greatcourses .panel-body {
     padding: 5px;
     text-align: center;
 }
 
-#page-blocks-greatcourses-index .panel-body a,
+.path-blocks-greatcourses .coursebox .panel-body a,
 .block_greatcourses .panel-body a {
     color: #4c6295;
     font-weight: bold;
 }
 
-#page-blocks-greatcourses-index .panel-body label,
+.path-blocks-greatcourses .coursebox .panel-body label,
 .block_greatcourses .panel-body label {
     font-weight: bold;
     font-size: 12px;
 }
 
-#page-blocks-greatcourses-index .panel-foot,
+.path-blocks-greatcourses .coursebox .panel-foot,
 .block_greatcourses .panel-foot {
     text-align: center;
     position: absolute;
@@ -84,20 +84,6 @@
     left: 0;
     right: 0;
     padding-bottom: 5px;
-}
-
-#page-blocks-greatcourses-index .panel-foot .btn,
-.block_greatcourses .panel-foot .btn {
-    background-color: #587fe3;
-    color: #fff;
-    border: none;
-    font-weight: bold;
-    border-radius: 3px;
-}
-
-#page-blocks-greatcourses-index .panel-foot .btn:hover,
-.block_greatcourses .panel-foot .btn:hover {
-    background-color: #4c6295;
 }
 
 #page-blocks-greatcourses-detail .content-layout {
@@ -121,7 +107,7 @@
     display: inline-block;
 }
 
-#page-blocks-greatcourses-index .coursessearch-box {
+.path-blocks-greatcourses .coursessearch-box {
     width: 100%;
     max-width: 500px;
     margin: 20px auto;
@@ -129,18 +115,18 @@
     border-radius: 5px;
 }
 
-#page-blocks-greatcourses-index .coursessearch-box form {
+.path-blocks-greatcourses .coursessearch-box form {
     display: block;
     border-radius: 10px;
     padding: 0 10px;
 }
 
-#page-blocks-greatcourses-index .coursessearch-box input {
+.path-blocks-greatcourses .coursessearch-box input {
     width: calc(100% - 40px);
     outline: none;
 }
 
-#page-blocks-greatcourses-index .coursessearch-box button {
+.path-blocks-greatcourses .coursessearch-box button {
     width: 30px;
     background-color: transparent;
     border: none;
@@ -149,7 +135,7 @@
     cursor: pointer;
 }
 
-#page-blocks-greatcourses-index .coursessearch-box button:hover {
+.path-blocks-greatcourses .coursessearch-box button:hover {
     opacity: 0.8;
 }
 
@@ -218,7 +204,7 @@
     content: "";
 }
 
-#page-blocks-greatcourses-index .courses {
+.path-blocks-greatcourses {
     padding: 40px 10px;
 }
 
@@ -610,32 +596,6 @@
     margin-top: 30px;
 }
 
-.relatedcourses > div .onerelated {
-    width: calc(33% - 40px);
-}
-
-.relatedcourses > div .onerelated a,
-.relatedcourses > div .onerelated a:not(.btn) {
-    color: #151C2F;
-    font-weight: bold;
-    font-size: 18px;
-    text-decoration: underline;
-}
-
-.relatedcourses > div .onerelated .courseimage {
-    width: 100%;
-    padding-top: 40%;
-    border-radius: 5px;
-    background-size: cover;
-    background-position: center center;
-    margin-bottom: 30px;
-}
-
-.relatedcourses > div .onerelated .greatcourses-ranking-stars {
-    float: right;
-    margin-top: 35px;
-}
-
 @media (max-width: 512px) {
     #page-blocks-greatcourses-detail .media-container > div > div {
         width: 100%;
@@ -667,4 +627,13 @@
         margin-bottom: 20px;
     }
 
+}
+
+/*Borrar*/
+#page-site-index #region-main {
+    display: flex !important;
+}
+
+#page-site-index [data-region="blocks-column"] {
+    width: 100% !important;
 }

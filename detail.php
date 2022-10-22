@@ -79,6 +79,8 @@ if ($enroll) {
     }
 }
 
+\block_greatcourses\controller::include_templatecss();
+
 echo $OUTPUT->header();
 
 if (!$course->visible) {

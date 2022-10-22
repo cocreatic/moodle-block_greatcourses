@@ -399,4 +399,17 @@ class controller {
 
         return $courseimage;
     }
+
+    public static function include_templatecss() {
+
+        global $CFG, $PAGE;
+
+        $template = get_config('block_greatcourses', 'templatetype');
+        $csspath = $CFG->dirroot . '/blocks/greatcourses/templates/' . $template . '/styles.css';
+
+        if ($template != 'default' && file_exists($csspath)) {
+            $PAGE->requires->css('/blocks/greatcourses/templates/' . $template . '/styles.css');
+        }
+
+    }
 }

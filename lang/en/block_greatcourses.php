@@ -114,3 +114,5 @@ $string['relatedcourses'] = 'Related courses';
 $string['courselinkcopiedtoclipboard'] = 'Course link copied to clipboard';
 $string['requireauth'] = 'You need <a href="{$a}">login</a> in order to enroll this course';
 $string['hascourseview'] = 'You have access to this course!';
+$string['templatetype'] = 'Template type';
+$string['templatetype_help'] = 'Choose a template to change the block pages appearance';

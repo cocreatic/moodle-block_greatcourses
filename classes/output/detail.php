@@ -63,7 +63,7 @@ class detail implements renderable, templatable {
 
         // Course detail info.
         $detailinfo = get_config('block_greatcourses', 'detailinfo');
-        $detailinfo = format_text($detailinfo, FORMAT_MOODLE);
+        $detailinfo = format_text($detailinfo, FORMAT_HTML, array('trusted' => true, 'noclean' => true));
 
         // Load social networks.
         $networks = get_config('block_greatcourses', 'networks');

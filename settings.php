@@ -171,15 +171,33 @@ if ($ADMIN->fulltree) {
     $settings->add($setting);
 
     // Cover image type.
-    $options = array(
+    $options = [
         'default' => get_string('coverimagetype_default', 'block_greatcourses'),
         'generated' => get_string('coverimagetype_generated', 'block_greatcourses'),
         'none' => get_string('coverimagetype_none', 'block_greatcourses'),
-    );
+    ];
 
     $name = 'block_greatcourses/coverimagetype';
     $title = get_string('coverimagetype', 'block_greatcourses');
     $help = get_string('coverimagetype_help', 'block_greatcourses');
+    $setting = new admin_setting_configselect($name, $title, $help, 'default', $options);
+    $settings->add($setting);
+
+    // Template type.
+    $options = ['default' => ''];
+
+    $path = $CFG->dirroot . '/blocks/greatcourses/templates/';
+    $files = array_diff(scandir($path), array('..', '.'));
+
+    foreach ($files as $file) {
+        if (is_dir($path . $file)) {
+            $options[$file] = $file;
+        }
+    }
+
+    $name = 'block_greatcourses/templatetype';
+    $title = get_string('templatetype', 'block_greatcourses');
+    $help = get_string('templatetype_help', 'block_greatcourses');
     $setting = new admin_setting_configselect($name, $title, $help, 'default', $options);
     $settings->add($setting);
 

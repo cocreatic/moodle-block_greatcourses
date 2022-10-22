@@ -15,7 +15,7 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template block_greatcourses/detail
+    @template block_greatcourses/cesil/detail
 
     This template renders the template content area for a resource.
 
@@ -54,6 +54,26 @@
             {{/rating}}
             <div>
                 <label>{{#str}}commentslabel, block_greatcourses, {{commentscount}} {{/str}}</label>
+            </div>
+        </div>
+
+        <div class="media-container">
+            <div class="content-layout">
+                {{#custom}}
+                    {{#media}}
+                    <div class="media-content">
+                        {{#isembed}}
+                            <iframe src="{{value}}" frameborder="0" allowfullscreen allow="autoplay; fullscreen; picture-in-picture"></iframe>
+                        {{/isembed}}
+                        {{^isembed}}
+                            <video controls="controls">
+                                <source src="{{value}}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        {{/isembed}}
+                    </div>
+                    {{/media}}
+                {{/custom}}
             </div>
         </div>
 
@@ -116,59 +136,6 @@
         </div>
     </div>
 
-    <div class="media-container">
-        <div class="content-layout">
-            {{#custom}}
-                {{#media}}
-                <div class="media-content">
-                    {{#isembed}}
-                        <iframe src="{{value}}" frameborder="0" allowfullscreen allow="autoplay; fullscreen; picture-in-picture"></iframe>
-                    {{/isembed}}
-                    {{^isembed}}
-                        <video controls="controls">
-                            <source src="{{value}}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    {{/isembed}}
-                </div>
-                {{/media}}
-            {{/custom}}
-            <div class="enroll-content enrollstate-{{enrollstate}}">
-                <div class="enroll-container">
-                    <div class="{{#haspaymentgw}}haspaymentgw{{/haspaymentgw}}">
-                    {{#custom}}
-                        {{#enrolltitle}}<p>{{enrolltitle}}</p>{{/enrolltitle}}
-                        {{#enrollurl}}
-                            <a href="{{{enrollurl}}}" class="btn btn-primary">
-                                {{enrollurllabel}}
-                            </a>
-                        {{/enrollurl}}
-                        {{#haspaymentgw}}
-                            {{#requireauth}}
-                                <div class="requireauth">{{#str}} requireauth, block_greatcourses, {{{requireauthurl}}} {{/str}}</div>
-                            {{/requireauth}}
-                            {{^requireauth}}
-                                {{#fee}}
-                                <a class="btn btn-primary"
-                                    data-action="core_payment/triggerPayment"
-                                    data-component="enrol_fee"
-                                    data-paymentarea="fee"
-                                    data-itemid="{{itemid}}"
-                                    data-cost="{{cost}}"
-                                    data-description={{#quote}}{{description}}{{/quote}}>
-                                    {{label}}
-                                </a>
-                                {{/fee}}
-                            {{/requireauth}}
-                        {{/haspaymentgw}}
-
-                    {{/custom}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="info-container">
         {{#custom}}
             {{#units}}
@@ -202,9 +169,47 @@
                 </div>
             {{/experts}}
         {{/custom}}
+    </div>
 
-        {{#custom}}
-            {{#license}}
+    <div class="enroll-content enrollstate-{{enrollstate}}">
+        <div class="content-layout">
+            <div class="enroll-container">
+                <div class="{{#haspaymentgw}}haspaymentgw{{/haspaymentgw}}">
+                {{#custom}}
+                    {{#enrolltitle}}<p>{{enrolltitle}}</p>{{/enrolltitle}}
+                    {{#enrollurl}}
+                        <a href="{{{enrollurl}}}" class="btn btn-primary">
+                            {{enrollurllabel}}
+                        </a>
+                    {{/enrollurl}}
+                    {{#haspaymentgw}}
+                        {{#requireauth}}
+                            <div class="requireauth">{{#str}} requireauth, block_greatcourses, {{{requireauthurl}}} {{/str}}</div>
+                        {{/requireauth}}
+                        {{^requireauth}}
+                            {{#fee}}
+                            <a class="btn btn-primary"
+                                data-action="core_payment/triggerPayment"
+                                data-component="enrol_fee"
+                                data-paymentarea="fee"
+                                data-itemid="{{itemid}}"
+                                data-cost="{{cost}}"
+                                data-description={{#quote}}{{description}}{{/quote}}>
+                                {{label}}
+                            </a>
+                            {{/fee}}
+                        {{/requireauth}}
+                    {{/haspaymentgw}}
+
+                {{/custom}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{#custom}}
+        {{#license}}
+    <div class="info-container">
                 <div class="content-layout">
                     <h3>{{title}}</h3>
                     <div class="content-box license">
@@ -220,9 +225,9 @@
                         {{/path}}
                     </div>
                 </div>
-            {{/license}}
-        {{/custom}}
     </div>
+        {{/license}}
+    {{/custom}}
 
     {{#detailinfo}}
         <div class="detailinfo">
@@ -237,7 +242,7 @@
             <h3>{{#str}}relatedcourses, block_greatcourses{{/str}}</h3>
             <div class="courses">
                 {{#related}}
-                    {{>block_greatcourses/course}}
+                    {{>block_greatcourses/cesil/course}}
                 {{/related}}
             </div>
         </div>
