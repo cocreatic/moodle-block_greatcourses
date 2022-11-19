@@ -39,7 +39,7 @@ $PAGE->set_title(get_string('coursedetail', 'block_greatcourses'));
 if ($enroll) {
 
     if (isguestuser() || !isloggedin()) {
-        $SESSION->wantsurl = new moodle_url('/blocks/greatcourses/detail.php', array('id' => $course->id, 'enroll' => 1));
+        $SESSION->wantsurl = (string)(new moodle_url('/blocks/greatcourses/detail.php', array('id' => $course->id, 'enroll' => 1)));
         redirect(get_login_url());
     }
 
@@ -74,7 +74,7 @@ if ($enroll) {
     }
 } else if ($tologin) {
     if (isguestuser() || !isloggedin()) {
-        $SESSION->wantsurl = new moodle_url('/blocks/greatcourses/detail.php', array('id' => $course->id));
+        $SESSION->wantsurl = (string)(new moodle_url('/blocks/greatcourses/detail.php', array('id' => $course->id)));
         redirect(get_login_url());
     }
 }
