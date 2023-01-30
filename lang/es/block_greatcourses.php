@@ -74,6 +74,7 @@ $string['enrollrequired'] = '¡Matricúlate para tomar el curso!';
 $string['enroll'] = 'Matricular';
 $string['notenrollable'] = '¡Curso no disponible para nuevas matrículas!';
 $string['gotocourse'] = 'Ir al curso';
+$string['catalog'] = 'Catálogo de cursos';
 $string['returntocatalog'] = 'Ir al catálogo de cursos';
 $string['greats'] = 'Destacados';
 $string['recents'] = 'Nuevos';

@@ -35,9 +35,12 @@ class controller {
 
     protected static $PAYFIELDID = null;
 
+    protected static $large = false;
+
     public static function course_preprocess($course, $large = false) {
         global $CFG, $OUTPUT, $DB, $PAGE, $USER;
 
+        self::$large = $large;
         $course->haspaymentgw = false;
         $course->paymenturl = null;
         $payfieldid = self::get_payfieldid();
@@ -393,7 +396,7 @@ class controller {
                 break;
                 default:
                     $courseimage = new \moodle_url($CFG->wwwroot . '/blocks/greatcourses/pix/' .
-                                                                ($large ? 'course' : 'course_small') . '.png');
+                                                                (self::$large ? 'course' : 'course_small') . '.png');
             }
         }
 

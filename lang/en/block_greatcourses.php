@@ -74,6 +74,7 @@ $string['enrollrequired'] = 'You need to enroll to take the course!';
 $string['enroll'] = 'Enroll';
 $string['notenrollable'] = 'Course currently unavailable to enroll!';
 $string['gotocourse'] = 'Go to course';
+$string['catalog'] = 'Catalog';
 $string['returntocatalog'] = 'Go to Catalog';
 $string['greats'] = 'Greats';
 $string['recents'] = 'Recents';
