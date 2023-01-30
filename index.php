@@ -26,8 +26,8 @@ $syscontext = context_system::instance();
 $PAGE->set_context($syscontext);
 $PAGE->set_url('/blocks/greatcourses/index.php');
 $PAGE->set_pagelayout('incourse');
-$PAGE->set_heading(get_string('amountcourses', 'block_greatcourses'));
-$PAGE->set_title(get_string('coursedetail', 'block_greatcourses'));
+$PAGE->set_heading(get_string('catalog', 'block_greatcourses'));
+$PAGE->set_title(get_string('catalog', 'block_greatcourses'));
 
 \block_greatcourses\controller::include_templatecss();
 
