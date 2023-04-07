@@ -107,7 +107,7 @@ class detail implements renderable, templatable {
             foreach ($fieldsnames as $field => $name) {
                 if ($name == $key) {
                     $c = new \stdClass();
-                    $c->title = $data->get_field()->get('name');
+                    $c->title = format_text($data->get_field()->get('name'), FORMAT_HTML);
 
                     $c->value = $data->export_value();
 
@@ -140,7 +140,7 @@ class detail implements renderable, templatable {
 
                 if (!empty($value)) {
                     $c = new \stdClass();
-                    $c->title = $data->get_field()->get('name');
+                    $c->title = format_text($data->get_field()->get('name'), FORMAT_HTML);
                     $c->value = $value;
                     $custom->$key = $c;
                 }

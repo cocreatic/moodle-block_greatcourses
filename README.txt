@@ -16,6 +16,9 @@ GIT: https://github.com/cocreatic/moodle-block_greatcourses
 IN VERSION
 =============
 2020071506:
+Multilanguage filter compatibility
+
+2020071506:
 Integration with payment gateway components.
 Include related courses
 Recognize Youtube and Vimeo media URL
