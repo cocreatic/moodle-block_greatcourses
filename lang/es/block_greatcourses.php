@@ -117,3 +117,6 @@ $string['requireauth'] = 'Debe <a href="{$a}">acceder</a> primero para poder mat
 $string['hascourseview'] = '¡Tienes acceso a este curso con tu usuario actual!';
 $string['templatetype'] = 'Tipo de plantilla';
 $string['templatetype_help'] = 'Elija una plantilla para ajustar la apariencia de las páginas del bloque';
+$string['comment_by'] = 'Por {$a}';
+$string['showmorecomments'] = 'Ver más comentarios';
+$string['showlesscomments'] = 'Ver menos';

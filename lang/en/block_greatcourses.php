@@ -117,3 +117,6 @@ $string['requireauth'] = 'You need <a href="{$a}">login</a> in order to enroll t
 $string['hascourseview'] = 'You have access to this course!';
 $string['templatetype'] = 'Template type';
 $string['templatetype_help'] = 'Choose a template to change the block pages appearance';
+$string['comment_by'] = 'By {$a}';
+$string['showmorecomments'] = 'Show more comments';
+$string['showlesscomments'] = 'Hide comments';
