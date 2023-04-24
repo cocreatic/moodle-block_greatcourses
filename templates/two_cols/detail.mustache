@@ -230,7 +230,7 @@
     <div class="detail-foot">
         {{#hascomments}}<h3>{{#str}}commentstitle, block_greatcourses{{/str}}</h3>{{/hascomments}}
 
-        <div>
+        <div class="{{#rating}}has_rating{{/rating}} {{#hascomments}}has_comments{{/hascomments}}">
             {{#hascomments}}
                 <div class="course-comments" data-count="{{commentscount}}">
                     {{#comments}}
@@ -246,7 +246,7 @@
                         </div>
                     {{/comments}}
                     <div class="box-show-more-comments">
-                        <button class="btn btn-primary" data-dhbg-toggle="showallcomments" data-target=".detail-foot .course-comments">
+                        <button class="btn btn-primary" data-greatcourses-toggle="showallcomments" data-target=".detail-foot .course-comments">
                             <span class="more">{{#str}} showmorecomments, block_greatcourses {{/str}}</span>
                             <span class="less">{{#str}} showlesscomments, block_greatcourses {{/str}}</span>
                         </button>

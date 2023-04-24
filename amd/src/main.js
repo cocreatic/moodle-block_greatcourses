@@ -16,7 +16,6 @@
 /**
  * Javascript to initialise the block.
  *
- * @package   block_greatcourses
  * @copyright 2020 David Herney @ BambuCo
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -62,6 +61,15 @@ define(['jquery', 'core/str'], function($, str) {
                 $msg.remove();
             }, 1600);
         });
+
+        $('[data-greatcourses-toggle]').on('click', function() {
+            var $this = $(this);
+            var cssclass = $this.attr('data-greatcourses-toggle');
+            var target = $this.attr('data-target');
+
+            $(target).toggleClass(cssclass);
+        });
+
     };
 
     return {
